@@ -1,0 +1,114 @@
+{
+  "projectType": "saas",
+  "projectName": "Fylepad",
+  "projectDescription": "A cross-platform notepad for effortless note-taking with rich text editing, multiple tabs, cloud sync, and support for Mermaid/PlantUML diagrams.",
+  "theme": "almond",
+  "primaryColor": "#F97316",
+  "lightColor": "#FED7AA",
+  "darkColor": "#C2410C",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "installation",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "Core Features",
+            "pages": [
+              "features/rich-text-editing",
+              "features/markdown-support",
+              "features/multi-tab-interface",
+              "features/auto-save",
+              "features/export-import"
+            ]
+          },
+          {
+            "group": "Advanced Features",
+            "pages": [
+              "advanced/diagrams",
+              "advanced/tables",
+              "advanced/code-blocks",
+              "advanced/mathematics",
+              "advanced/custom-styling"
+            ]
+          },
+          {
+            "group": "User Guide",
+            "pages": [
+              "guide/keyboard-shortcuts",
+              "guide/organizing-notes",
+              "guide/customization",
+              "guide/focus-mode"
+            ]
+          },
+          {
+            "group": "Platform Specific",
+            "pages": [
+              "platforms/desktop",
+              "platforms/web",
+              "platforms/cross-platform-sync"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Development",
+        "groups": [
+          {
+            "group": "Contributing",
+            "pages": [
+              "development/overview",
+              "development/setup",
+              "development/architecture",
+              "development/building"
+            ]
+          },
+          {
+            "group": "Extensions",
+            "pages": [
+              "development/tiptap-extensions",
+              "development/custom-nodes",
+              "development/markdown-parser"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Markdown-based rich text editing with TipTap",
+    "Multi-tab interface with drag-and-drop support",
+    "Auto-save functionality",
+    "Export to PDF and Markdown formats",
+    "Mermaid and PlantUML diagram support",
+    "Interactive tables with cell selection",
+    "Syntax-highlighted code blocks",
+    "Mathematical expressions with KaTeX",
+    "Focus mode for distraction-free writing",
+    "Cross-platform (Windows, macOS, Linux, Web)",
+    "Light and dark theme support",
+    "Tauri-powered desktop app (lightweight and fast)"
+  ],
+  "publicApiSurface": [
+    "Rich Text Editor (TipTap-based)",
+    "Tab Management System",
+    "Export API (PDF, Markdown)",
+    "Import API (Markdown files)",
+    "Diagram Rendering (Mermaid, PlantUML)",
+    "Table Editor",
+    "Code Block Editor with syntax highlighting",
+    "Math Equation Editor (KaTeX)",
+    "Auto-save State Management",
+    "Theme Switcher (Light/Dark)",
+    "Keyboard Shortcuts",
+    "Focus Mode Toggle",
+    "Custom Color and Font Selection"
+  ]
+}
