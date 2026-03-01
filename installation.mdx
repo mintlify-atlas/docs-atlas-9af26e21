@@ -1,0 +1,152 @@
+---
+title: "Installation"
+description: "Download and install Fylepad on Windows, macOS, Linux, or use the web version"
+---
+
+## Choose your platform
+
+Fylepad is available for all major operating systems and can also be used directly in your browser.
+
+<CardGroup cols={2}>
+  <Card title="Windows" icon="windows">
+    Download the MSI installer for Windows
+  </Card>
+  
+  <Card title="macOS" icon="apple">
+    Download the DMG package for macOS
+  </Card>
+  
+  <Card title="Linux" icon="ubuntu">
+    Download the DEB package for Ubuntu/Debian
+  </Card>
+  
+  <Card title="Web" icon="globe">
+    Use Fylepad directly in your browser
+  </Card>
+</CardGroup>
+
+## Desktop installation
+
+<Steps>
+  <Step title="Download the installer">
+    Visit the [Releases](https://github.com/imrofayel/fylepad/releases) page on GitHub and download the latest version for your platform:
+    
+    - **Windows**: `fylepad_3.0.0_x64.msi`
+    - **macOS (Intel)**: `fylepad_3.0.0_x64.dmg`
+    - **macOS (Apple Silicon)**: `fylepad_3.0.0_aarch64.app`
+    - **Linux (Debian/Ubuntu)**: `fylepad_3.0.0_amd64.deb`
+  </Step>
+  
+  <Step title="Install the application">
+    <Tabs>
+      <Tab title="Windows">
+        1. Double-click the downloaded `.msi` file
+        2. Follow the installation wizard
+        3. Launch Fylepad from the Start menu or desktop shortcut
+      </Tab>
+      
+      <Tab title="macOS">
+        **Intel Macs:**
+        1. Open the downloaded `.dmg` file
+        2. Drag Fylepad to your Applications folder
+        3. Launch Fylepad from Applications
+        
+        **Apple Silicon Macs:**
+        
+        Since the app is currently unsigned, you'll need to run this command:
+        
+        ```bash
+        xattr -c fylepad_aarch64.app
+        ```
+        
+        Alternatively, use the Intel DMG (`fylepad_3.0.0_x64.dmg`) which runs via Rosetta.
+      </Tab>
+      
+      <Tab title="Linux">
+        **Debian/Ubuntu:**
+        
+        ```bash
+        sudo dpkg -i fylepad_3.0.0_amd64.deb
+        ```
+        
+        If you encounter dependency issues:
+        
+        ```bash
+        sudo apt-get install -f
+        ```
+        
+        Launch from your applications menu or run:
+        
+        ```bash
+        fylepad
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  
+  <Step title="Start using Fylepad">
+    Once installed, launch the application and you're ready to start taking notes!
+  </Step>
+</Steps>
+
+<Warning>
+  **macOS users**: The app is currently unsigned due to the lack of a paid Apple Developer account. You may need to allow the app in System Preferences > Security & Privacy after the first launch attempt.
+</Warning>
+
+## Web version
+
+Prefer not to install anything? Use the web version of Fylepad:
+
+<Card title="Launch web version" icon="rocket" href="https://fylepadapp.vercel.app/" horizontal>
+  Access Fylepad directly in your browser at fylepadapp.vercel.app
+</Card>
+
+<Note>
+  While the web version offers the same features, we recommend using the desktop app for daily offline use and better performance.
+</Note>
+
+## System requirements
+
+### Desktop applications
+
+- **Windows**: Windows 10 or later
+- **macOS**: macOS 10.15 (Catalina) or later
+- **Linux**: Modern distribution with GTK 3.0+
+- **Disk space**: Less than 10MB
+- **Memory**: Minimal RAM usage thanks to Rust core
+
+### Web version
+
+- Modern web browser (Chrome, Firefox, Safari, Edge)
+- Internet connection required
+
+## Verify installation
+
+After installation, verify that Fylepad is working correctly:
+
+1. Launch the application
+2. You should see the main editor interface
+3. The window title should display "fylepad - a notepad of your dreams."
+4. Try creating a new note to confirm everything works
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Quickstart guide" icon="rocket" href="/quickstart">
+    Learn how to create your first note and explore basic features.
+  </Card>
+  
+  <Card title="Rich text editing" icon="pen-fancy" href="/features/rich-text-editing">
+    Discover Fylepad's powerful editing capabilities.
+  </Card>
+</CardGroup>
+
+## Troubleshooting
+
+If you encounter issues during installation:
+
+- **Windows**: Ensure you have administrator privileges
+- **macOS**: Check Security & Privacy settings for blocked applications
+- **Linux**: Verify all dependencies are installed with `apt-get install -f`
+
+For additional help, visit the [GitHub Issues](https://github.com/imrofayel/fylepad/issues) page.

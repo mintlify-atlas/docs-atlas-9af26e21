@@ -1,0 +1,105 @@
+---
+title: 'Desktop application'
+description: 'Install and use Fylepad as a native desktop application on Windows, macOS, and Linux'
+---
+
+Fylepad's desktop application is built with Tauri, providing a lightweight, fast, and secure native experience. At less than 10MB, it delivers powerful features without the bloat of Chromium-based alternatives.
+
+## Installation
+
+Download the latest version for your platform from the [GitHub Releases](https://github.com/imrofayel/fylepad/releases) page.
+
+<Tabs>
+  <Tab title="Windows">
+    Download the `.msi` installer and run it. Follow the setup wizard to complete installation.
+  </Tab>
+  <Tab title="macOS">
+    Download the `.dmg` file for your architecture:
+    - **Apple Silicon (M1/M2/M3)**: Use the `aarch64` version
+    - **Intel**: Use the `x64` version
+
+    <Warning>
+      The app is currently unsigned. To install the aarch64 version, run:
+      ```bash
+      xattr -c fylepad_aarch64.app
+      ```
+      Alternatively, use the Intel dmg which may not require this step.
+    </Warning>
+  </Tab>
+  <Tab title="Linux">
+    Download the `.deb` package for Ubuntu/Debian-based distributions and install it:
+    ```bash
+    sudo dpkg -i fylepad_*.deb
+    ```
+  </Tab>
+</Tabs>
+
+## Key features
+
+### Rust-powered performance
+
+Fylepad's desktop app is powered by a Rust core through Tauri, delivering exceptional performance, security, and memory efficiency. Unlike Electron-based apps, there's no bulky Chromium browser under the hood.
+
+### Offline-first design
+
+The desktop application works completely offline. All your notes are stored locally on your device, ensuring you can access and edit them without an internet connection.
+
+<Info>
+  Your notes are automatically saved to your system's application data directory, providing reliable local storage.
+</Info>
+
+### Native file system integration
+
+The desktop app uses Tauri's file system API to save your application state directly to your device. This provides:
+
+- Faster read/write operations compared to browser storage
+- More reliable persistence across sessions
+- Integration with your operating system's file management
+
+### System resource efficiency
+
+With a compact size of less than 10MB, Fylepad uses minimal system resources:
+
+- Low memory footprint
+- Fast startup time
+- Efficient CPU usage
+- Native window management
+
+## Application settings
+
+The desktop application saves your preferences and state in the following locations:
+
+<Tabs>
+  <Tab title="Windows">
+    ```
+    %APPDATA%\com.fylepad.dev\app_state.json
+    ```
+  </Tab>
+  <Tab title="macOS">
+    ```
+    ~/Library/Application Support/com.fylepad.dev/app_state.json
+    ```
+  </Tab>
+  <Tab title="Linux">
+    ```
+    ~/.config/com.fylepad.dev/app_state.json
+    ```
+  </Tab>
+</Tabs>
+
+## Window configuration
+
+The desktop application opens with sensible defaults:
+
+- Default size: 800x600 pixels
+- Minimum size: 600x600 pixels
+- Resizable window
+- Supports fullscreen mode
+
+## Updates
+
+To update Fylepad, download the latest version from the [Releases page](https://github.com/imrofayel/fylepad/releases) and install it over your existing installation. Your notes and settings will be preserved.
+
+<Tip>
+  Star the [GitHub repository](https://github.com/imrofayel/fylepad) to get notified of new releases.
+</Tip>

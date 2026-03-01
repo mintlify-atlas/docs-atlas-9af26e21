@@ -1,0 +1,438 @@
+---
+title: Custom nodes
+description: Deep dive into Fylepad's custom TipTap node implementations for diagrams, math, and more
+---
+
+Fylepad extends TipTap with custom node types to support advanced features like Mermaid diagrams, PlantUML charts, mathematical equations, and inter-tab linking.
+
+## Node architecture
+
+Custom nodes in Fylepad follow this pattern:
+
+```typescript
+import { Node } from "@tiptap/core";
+
+export const CustomNode = Node.create({
+  name: "customNode",
+  group: "block",
+  atom: true,
+  code: true,
+  content: "text*",
+  
+  parseHTML() {
+    return [{ tag: `span[data-type="${this.name}"]` }];
+  },
+  
+  renderHTML({ node, HTMLAttributes }) {
+    return ["span", { "data-type": this.name }, node.textContent];
+  },
+  
+  addNodeView() {
+    // Custom rendering logic
+  },
+});
+```
+
+## Mermaid node
+
+Renders Mermaid diagrams with live preview.
+
+### Implementation
+
+```typescript
+// extensions/nodes/mermaid.ts
+import { Node } from "@tiptap/core";
+import mermaid from "mermaid";
+import { InnerEditorView } from "@/extensions/node-view/inner-editor";
+
+mermaid.initialize({
+  startOnLoad: false,
+});
+
+export const Mermaid = Node.create({
+  name: "mermaid",
+  group: "block",
+  atom: true,
+  code: true,
+  content: "text*",
+  
+  addNodeView() {
+    const render = debounce(300, (code: string, node: HTMLElement) => {
+      if (code) {
+        const dom = document.createElement("div");
+        dom.id = `mermaid-${Math.random().toString(36).substring(2, 10)}`;
+        
+        mermaid.render(dom.id, code)
+          .then(({ svg, bindFunctions }) => {
+            dom.innerHTML = svg;
+            bindFunctions?.(dom);
+            node.innerHTML = dom.outerHTML;
+          })
+          .catch((reason) => {
+            node.classList.add("ProseMirror-error");
+            node.innerHTML = reason;
+          });
+      }
+    });
+    
+    return InnerEditorView.create({
+      onRender: ({ view }) => {
+        render(view.node.textContent, view.$preview);
+      },
+    });
+  },
+});
+```
+
+### Features
+
+- **Live rendering** — Diagrams update as you type (300ms debounce)
+- **Error handling** — Shows error messages for invalid syntax
+- **Unique IDs** — Each diagram gets a random ID for Mermaid rendering
+- **SVG output** — Diagrams render as scalable SVG
+
+### Markdown integration
+
+```typescript
+addStorage() {
+  return {
+    markdown: {
+      parser: {
+        match: node => node.type === "containerDirective" && node.name === "mermaid",
+        apply: (state, node, type) => {
+          // Parse from Markdown
+        },
+      },
+      serializer: {
+        match: node => node.type.name === "mermaid",
+        apply: (state, node) => {
+          // Serialize to Markdown
+        },
+      },
+    },
+  };
+}
+```
+
+### Block menu integration
+
+Mermaid appears in the block menu (`/` command):
+
+```typescript
+blockMenu: {
+  items: [
+    {
+      id: "mermaid",
+      name: "Mermaid",
+      icon: icon("mermaid"),
+      keywords: "mermaid,graph",
+      action: editor => 
+        editor.chain()
+          .setMermaid("graph TD;\n  A-->B;  A-->C;\n  B-->D;\n  C-->D;")
+          .focus()
+          .run(),
+    },
+  ],
+}
+```
+
+### Input rule
+
+Type `:::mermaid` to insert:
+
+```typescript
+addInputRules() {
+  return [
+    textblockTypeInputRule({
+      find: /^:::mermaid$/,
+      type: this.type,
+    }),
+  ];
+}
+```
+
+## PlantUML node
+
+Renders PlantUML diagrams using the PlantUML server.
+
+### Implementation
+
+```typescript
+// extensions/nodes/plantuml.ts
+import { Node } from "@tiptap/core";
+import { encode } from "plantuml-encoder";
+import { InnerEditorView } from "@/extensions/node-view/inner-editor";
+
+export const Plantuml = Node.create({
+  name: "plantuml",
+  group: "block",
+  atom: true,
+  code: true,
+  content: "text*",
+  
+  addNodeView() {
+    const render = debounce(300, (code: string, node: HTMLElement) => {
+      if (code) {
+        try {
+          const dom = document.createElement("img");
+          dom.src = `https://www.plantuml.com/plantuml/svg/${encode(code)}`;
+          dom.alt = code;
+          node.innerHTML = dom.outerHTML;
+        } catch (e) {
+          node.classList.add("ProseMirror-error");
+          node.innerHTML = (e as Error).message;
+        }
+      }
+    });
+    
+    return InnerEditorView.create({
+      onRender: ({ view }) => {
+        render(view.node.textContent, view.$preview);
+      },
+    });
+  },
+});
+```
+
+### Features
+
+- **Server rendering** — Uses PlantUML's public server for rendering
+- **Encoding** — Encodes PlantUML code using `plantuml-encoder`
+- **SVG images** — Renders as `<img>` with SVG source
+- **Error handling** — Catches encoding errors
+
+### Input rule
+
+Type `:::plantuml` to insert:
+
+```typescript
+addInputRules() {
+  return [
+    textblockTypeInputRule({
+      find: /^:::plantuml$/,
+      type: this.type,
+    }),
+  ];
+}
+```
+
+## Math node
+
+Renders KaTeX mathematical expressions.
+
+### Implementation
+
+```typescript
+// extensions/nodes/math.ts
+import { Node } from "@tiptap/core";
+import katex from "katex";
+import { InnerEditorView } from "@/extensions/node-view/inner-editor";
+
+export const Math = Node.create({
+  name: "math",
+  group: "block",
+  atom: true,
+  code: true,
+  content: "text*",
+  
+  addNodeView() {
+    const render = debounce(300, (code: string, node: HTMLElement) => {
+      if (code) {
+        try {
+          katex.render(code, node, {
+            displayMode: true,
+            throwOnError: false,
+          });
+        } catch (e) {
+          node.classList.add("ProseMirror-error");
+          node.innerHTML = (e as Error).message;
+        }
+      }
+    });
+    
+    return InnerEditorView.create({
+      onRender: ({ view }) => {
+        render(view.node.textContent, view.$preview);
+      },
+    });
+  },
+});
+```
+
+### Features
+
+- **KaTeX rendering** — Fast math typesetting
+- **Display mode** — Block-level equations
+- **Error tolerance** — `throwOnError: false` prevents crashes
+- **Live preview** — Updates as you type
+
+## TabLink node
+
+Creates links between tabs.
+
+### Implementation
+
+```typescript
+// extensions/nodes/tabLink.ts
+import { Node } from "@tiptap/core";
+
+export const TabLink = Node.create({
+  name: "tabLink",
+  group: "inline",
+  inline: true,
+  atom: true,
+  
+  addAttributes() {
+    return {
+      tabId: { default: null },
+      tabTitle: { default: null },
+    };
+  },
+  
+  parseHTML() {
+    return [{ tag: "a[data-type='tabLink']" }];
+  },
+  
+  renderHTML({ HTMLAttributes }) {
+    return [
+      "a",
+      {
+        "data-type": "tabLink",
+        "data-tab-id": HTMLAttributes.tabId,
+        class: "tab-link",
+      },
+      HTMLAttributes.tabTitle || "Untitled",
+    ];
+  },
+});
+```
+
+### Features
+
+- **Tab references** — Links store tab ID and title
+- **Click to navigate** — Clicking switches to the linked tab
+- **Auto-update** — Title updates if tab is renamed
+- **Suggestion menu** — Type `@` to see tab suggestions
+
+## Embed node
+
+Embeds external content (videos, tweets, etc.).
+
+### Implementation
+
+```typescript
+// extensions/nodes/embed.ts
+import { Node } from "@tiptap/core";
+
+export const Embed = Node.create({
+  name: "embed",
+  group: "block",
+  atom: true,
+  
+  addAttributes() {
+    return {
+      src: { default: null },
+      type: { default: "iframe" },
+    };
+  },
+  
+  parseHTML() {
+    return [{ tag: "div[data-type='embed']" }];
+  },
+  
+  renderHTML({ HTMLAttributes }) {
+    return [
+      "div",
+      { "data-type": "embed", class: "embed-container" },
+      [
+        "iframe",
+        {
+          src: HTMLAttributes.src,
+          frameborder: "0",
+          allowfullscreen: "true",
+        },
+      ],
+    ];
+  },
+});
+```
+
+### Features
+
+- **iframe embedding** — Embeds external content
+- **URL detection** — Auto-detects embeddable URLs
+- **Responsive** — Embeds scale to container width
+
+## InnerEditorView
+
+Custom node views use the `InnerEditorView` helper:
+
+```typescript
+// extensions/node-view/inner-editor.ts
+import { NodeView } from "@tiptap/pm/view";
+
+export class InnerEditorView implements NodeView {
+  dom: HTMLElement;
+  contentDOM?: HTMLElement;
+  $preview: HTMLElement;
+  
+  static create({ onRender, HTMLAttributes }) {
+    return (node, view, getPos) => {
+      const instance = new InnerEditorView(node, view, getPos, HTMLAttributes);
+      onRender({ view: instance, node, getPos });
+      return instance;
+    };
+  }
+}
+```
+
+This provides:
+- Editable content area
+- Preview area for rendered output
+- Update handling
+- Selection management
+
+## Node storage
+
+Nodes register with extension storage for:
+
+### Markdown parsing
+
+```typescript
+markdown: {
+  parser: {
+    match: node => node.type === "containerDirective" && node.name === "mermaid",
+    apply: (state, node, type) => { /* parse */ },
+  },
+  serializer: {
+    match: node => node.type.name === "mermaid",
+    apply: (state, node) => { /* serialize */ },
+  },
+}
+```
+
+### Block menu
+
+```typescript
+blockMenu: {
+  items: [
+    {
+      id: "mermaid",
+      name: "Mermaid",
+      icon: icon("mermaid"),
+      action: editor => editor.chain().setMermaid("...").run(),
+    },
+  ],
+}
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="TipTap extensions" icon="puzzle-piece" href="/development/tiptap-extensions">
+    Overview of all TipTap extensions
+  </Card>
+  <Card title="Markdown parser" icon="markdown" href="/development/markdown-parser">
+    How Markdown parsing works
+  </Card>
+</CardGroup>

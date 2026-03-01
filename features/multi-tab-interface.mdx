@@ -1,0 +1,229 @@
+---
+title: Multi-tab interface
+description: Work on multiple notes simultaneously with Fylepad's powerful tab management system
+---
+
+Fylepad's multi-tab interface lets you work on multiple notes at the same time, with support for drag-and-drop reordering, color coding, and tab linking.
+
+## Working with tabs
+
+### Creating tabs
+
+Create new tabs in multiple ways:
+
+<Tabs>
+  <Tab title="Button">
+    Click the **+** button in the tab bar to create a new tab
+  </Tab>
+  <Tab title="Keyboard shortcut">
+    Press the new tab keyboard shortcut (varies by platform)
+  </Tab>
+  <Tab title="Command palette">
+    Open the command palette (Ctrl+K / Cmd+K) and select **New Tab**
+  </Tab>
+</Tabs>
+
+Each new tab starts with a blank note titled "Untitled".
+
+### Switching between tabs
+
+Navigate between tabs:
+
+- **Click** on any tab to switch to it
+- **Keyboard navigation** — Use keyboard shortcuts to cycle through tabs
+- **Command palette** — Search for tabs by name (Ctrl+K / Cmd+K)
+
+<Tip>
+The command palette shows all your tabs with their titles, making it easy to find the right note.
+</Tip>
+
+### Closing tabs
+
+Close tabs you no longer need:
+
+- Click the **×** button on any tab
+- Use the tab context menu (right-click)
+- Keyboard shortcuts for closing tabs
+
+<Warning>
+Closed tabs are not saved unless you've locked them or they contain content. The auto-save feature preserves your work.
+</Warning>
+
+## Tab layouts
+
+Fylepad supports two tab layout modes:
+
+<Tabs>
+  <Tab title="Horizontal tabs">
+    Tabs appear in a horizontal bar at the top of the window. This is the default layout, ideal for wide screens and quick tab switching.
+    
+    Perfect for:
+    - Laptops and desktop monitors
+    - Working with many tabs
+    - Quick visual scanning
+  </Tab>
+  <Tab title="Vertical tabs">
+    Tabs appear in a sidebar on the left side of the window. This layout maximizes vertical space and shows longer tab titles.
+    
+    Perfect for:
+    - Ultrawide monitors
+    - Long note titles
+    - Organizing many tabs
+  </Tab>
+</Tabs>
+
+Switch between layouts by clicking the layout toggle button in the tab bar.
+
+## Tab organization
+
+### Reordering tabs
+
+Organize your tabs by dragging and dropping:
+
+<Steps>
+  <Step title="Click and hold">
+    Click on a tab and hold the mouse button
+  </Step>
+  <Step title="Drag">
+    Move your mouse to the desired position
+  </Step>
+  <Step title="Drop">
+    Release the mouse button to place the tab
+  </Step>
+</Steps>
+
+The tab order is automatically saved.
+
+### Color coding
+
+Assign colors to tabs for visual organization:
+
+**Available colors:**
+- Red
+- Orange  
+- Yellow
+- Green
+- Blue
+- Purple
+- Pink
+- Gray
+
+<Steps>
+  <Step title="Open tab context menu">
+    Right-click on any tab
+  </Step>
+  <Step title="Select color">
+    Choose a color from the menu
+  </Step>
+  <Step title="See indicator">
+    A colored indicator appears on the left edge of the tab
+  </Step>
+</Steps>
+
+<Tip>
+Use colors to categorize your notes by project, priority, or topic. For example, red for urgent tasks, blue for personal notes, green for completed projects.
+</Tip>
+
+## Tab features
+
+### Tab locking
+
+Lock important tabs to prevent accidental closure:
+
+<Steps>
+  <Step title="Right-click tab">
+    Open the context menu on any tab
+  </Step>
+  <Step title="Select lock">
+    Choose **Lock Tab** from the menu
+  </Step>
+  <Step title="Verify">
+    Locked tabs show a lock icon and cannot be closed
+  </Step>
+</Steps>
+
+Unlock a tab the same way to allow closing it again.
+
+### Tab duplication
+
+Create a copy of any tab:
+
+1. Right-click on the tab
+2. Select **Duplicate Tab**
+3. A new tab opens with the same content
+
+<Note>
+Duplicating a tab creates an independent copy. Changes to one tab won't affect the other.
+</Note>
+
+### Tab linking
+
+Create links between your notes:
+
+<Steps>
+  <Step title="Type @ symbol">
+    In any note, type the `@` character
+  </Step>
+  <Step title="Select tab">
+    A menu appears showing all your tabs. Select the tab you want to link to
+  </Step>
+  <Step title="Click link">
+    The link is created. Click it to jump to that tab
+  </Step>
+</Steps>
+
+Tab links update automatically if you rename a tab.
+
+## Tab persistence
+
+Fylepad automatically saves your tab state:
+
+- **Tab content** — All text and formatting
+- **Tab order** — Your custom arrangement
+- **Tab titles** — Custom names you've assigned
+- **Tab colors** — Color coding
+- **Tab locks** — Locked/unlocked state
+- **Active tab** — Which tab was open when you closed
+
+When you reopen Fylepad, all your tabs restore exactly as you left them.
+
+<Info>
+Tab state is saved locally on your device. The desktop app uses the file system, while the web version uses browser localStorage.
+</Info>
+
+## Tab limits
+
+Fylepad has no hard limit on the number of tabs you can create. However, performance may vary based on:
+
+- Device memory
+- Total content across all tabs
+- Number of diagrams, tables, and complex content
+
+For best performance, close tabs you're not actively using.
+
+## Keyboard shortcuts
+
+Common tab operations:
+
+| Action | Shortcut |
+|--------|----------|
+| New tab | Platform-specific |
+| Close tab | Platform-specific |
+| Next tab | Platform-specific |
+| Previous tab | Platform-specific |
+| Command palette | Ctrl+K (Win/Linux)<br/>Cmd+K (Mac) |
+
+<Tip>
+Use the command palette (Ctrl+K / Cmd+K) for quick tab navigation. Start typing a tab name to filter and jump directly to it.
+</Tip>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Organizing notes" icon="folder-tree" href="/guide/organizing-notes">
+    Learn strategies for organizing your notes
+  </Card>
+  <Card title="Keyboard shortcuts" icon="keyboard" href="/guide/keyboard-shortcuts">
+    Master all keyboard shortcuts
+  </Card>
+</CardGroup>

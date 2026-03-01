@@ -1,0 +1,189 @@
+---
+title: 'Cross-platform sync'
+description: 'Understand how Fylepad saves your work and maintains state across desktop and web platforms'
+---
+
+Fylepad automatically saves your work as you type, ensuring you never lose progress. This state persistence works seamlessly across both desktop and web platforms.
+
+## How auto-save works
+
+Fylepad continuously monitors your editor state and saves it automatically:
+
+<Steps>
+  <Step title="Real-time monitoring">
+    As you type, edit, or modify tabs, Fylepad tracks all changes to your notes and workspace configuration.
+  </Step>
+  <Step title="Automatic persistence">
+    Your state is saved immediately to local storage without requiring manual save actions.
+  </Step>
+  <Step title="Instant restoration">
+    When you reopen Fylepad, your exact workspace state—including all tabs, content, and settings—is restored.
+  </Step>
+</Steps>
+
+## What gets saved
+
+Fylepad persists your complete workspace state:
+
+<AccordionGroup>
+  <Accordion title="Tab content and metadata">
+    - All open tabs and their content
+    - Tab names and order
+    - Active tab selection
+    - Unique tab identifiers for consistent tracking
+  </Accordion>
+  <Accordion title="Editor state">
+    - Complete note content in Markdown format
+    - Cursor position and text selection
+    - Undo/redo history for each tab
+  </Accordion>
+  <Accordion title="User preferences">
+    - Color mode (light/dark theme)
+    - Tab layout (horizontal/vertical)
+    - Sidebar visibility
+    - Text-to-speech settings (voice and rate)
+  </Accordion>
+</AccordionGroup>
+
+## Platform-specific storage
+
+### Desktop application
+
+The desktop app uses a dual-layer storage approach for maximum reliability:
+
+```typescript
+// Primary: Tauri file system API
+const appDir = await path.appDataDir();
+const filePath = await path.join(appDir, 'app_state.json');
+await fs.writeTextFile(filePath, JSON.stringify(appState));
+
+// Fallback: localStorage
+localStorage.setItem('appState', JSON.stringify(appState));
+```
+
+<Info>
+  The desktop app prioritizes Tauri's native file system API for better performance and reliability, falling back to localStorage if needed.
+</Info>
+
+**Storage location:**
+
+Your state is saved to `app_state.json` in your system's application data directory. See [Desktop application](/platforms/desktop#application-settings) for exact paths.
+
+### Web application
+
+The web version relies on browser localStorage:
+
+```typescript
+localStorage.setItem('appState', JSON.stringify(appState));
+```
+
+This provides:
+- Instant saving and loading
+- No server communication required
+- Complete privacy (data never leaves your device)
+
+<Warning>
+  Browser storage limits vary by browser and can be cleared by system cleanup tools. For important long-term notes, consider using the desktop app or regularly exporting your work.
+</Warning>
+
+## Data format
+
+Your application state is stored as JSON:
+
+```json
+{
+  "tabs": [
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "name": "My Notes",
+      "content": "# Welcome to Fylepad\n\nYour notes here..."
+    }
+  ],
+  "activeTab": 0,
+  "colorMode": "dark",
+  "isVerticalTabs": false,
+  "sidebarVisible": true
+}
+```
+
+## Migration and compatibility
+
+Fylepad handles backward compatibility automatically:
+
+- **ID migration**: Older tabs without unique IDs are automatically assigned UUIDs
+- **Setting defaults**: Missing preferences receive sensible default values
+- **Format updates**: State structure updates are applied transparently
+
+<Tip>
+  You can safely switch between desktop and web versions. Export your notes from one platform and import them into the other using the built-in export/import features.
+</Tip>
+
+## Reliability guarantees
+
+### No manual saves required
+
+You can close Fylepad at any time without saving. Your work is continuously persisted as you type.
+
+### Crash recovery
+
+If the application closes unexpectedly:
+
+1. Your last saved state remains intact in storage
+2. Reopen Fylepad to continue exactly where you left off
+3. All tabs and content are restored
+
+### Storage failure handling
+
+If storage operations fail:
+
+<Tabs>
+  <Tab title="Desktop">
+    The app falls back from Tauri's file system to localStorage, ensuring your state is always saved.
+  </Tab>
+  <Tab title="Web">
+    If localStorage is unavailable (private browsing, storage quota exceeded), you'll receive a notification and can export your work manually.
+  </Tab>
+</Tabs>
+
+## Export and import
+
+While auto-save handles persistence within each platform, you can manually transfer notes between devices:
+
+<Steps>
+  <Step title="Export your notes">
+    Use the export feature to save individual notes as Markdown (`.md`) or PDF files.
+  </Step>
+  <Step title="Transfer files">
+    Move exported files to your other device via cloud storage, email, or USB drive.
+  </Step>
+  <Step title="Import on new device">
+    Use the import feature to load `.md` files into Fylepad on any platform.
+  </Step>
+</Steps>
+
+<Note>
+  Export/import is file-based and doesn't sync your complete workspace state. For full state transfer, you can manually copy the `app_state.json` file between devices.
+</Note>
+
+## Storage limits
+
+### Desktop
+
+The desktop application has no practical storage limits. Your notes are stored as files on your system, constrained only by available disk space.
+
+### Web
+
+localStorage typically provides 5-10MB of storage per domain, which is sufficient for thousands of notes. If you approach this limit:
+
+- Export older notes to free up space
+- Delete unused tabs
+- Consider switching to the desktop application
+
+## Privacy
+
+Fylepad's auto-save system prioritizes your privacy:
+
+- All data is stored locally on your device
+- No cloud synchronization or server uploads
+- No account creation required
+- Your notes never leave your device unless you explicitly export them

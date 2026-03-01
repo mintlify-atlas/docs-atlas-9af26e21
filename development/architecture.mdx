@@ -1,0 +1,216 @@
+---
+title: Architecture
+description: Understand Fylepad's project structure, component organization, and data flow
+---
+
+This guide explains how Fylepad is organized and how its components work together.
+
+## Project structure
+
+Fylepad follows Nuxt.js conventions with additional directories for TipTap extensions and Tauri integration:
+
+```
+fylepad/
+├── components/          # Vue components
+├── composables/         # Vue composables (shared logic)
+├── extensions/          # TipTap editor extensions
+├── layouts/            # Nuxt layouts
+├── pages/              # Nuxt pages (routes)
+├── plugins/            # Nuxt plugins
+├── stores/             # Pinia stores
+├── utils/              # Utility functions
+├── assets/             # CSS and design assets
+├── public/             # Static files
+├── server/             # Server-side code
+├── src-tauri/          # Tauri Rust backend
+├── types/              # TypeScript type definitions
+└── lib/                # Shared libraries
+```
+
+## Core directories
+
+### components/
+
+Vue components are auto-imported by Nuxt. The main components include:
+
+- **`editor.vue`** - The primary TipTap editor component (61k+ lines)
+- **`tabLinkMenu.vue`** - Tab navigation and linking interface
+- **`ui/`** - Reusable UI components (buttons, dialogs, menus, etc.)
+
+Components are organized by feature and automatically available throughout the application without explicit imports.
+
+### extensions/
+
+Custom TipTap extensions that enhance the editor's functionality:
+
+```
+extensions/
+├── ColorHighlighter.ts       # Highlight color values in text
+├── ImageResize.ts            # Resizable image nodes
+├── SmilieReplacer.ts         # Emoji replacement
+├── hyperlink.ts              # Enhanced link handling
+├── search&replace.ts         # Find and replace functionality
+├── block-menu/               # Block-level menu components
+├── float-menu/               # Floating toolbar
+├── markdown/                 # Markdown parsing and serialization
+├── modals/                   # Editor modals (insert table, etc.)
+├── node-view/                # Custom node renderers
+├── nodes/                    # Custom TipTap nodes
+├── tab-link/                 # Cross-tab linking
+├── tab-link-menu/            # Tab link suggestions
+└── helpers/                  # Extension utilities
+```
+
+<Note>
+  Extensions are registered in the editor component and extend TipTap's base functionality with Fylepad-specific features.
+</Note>
+
+### pages/
+
+Nuxt's file-based routing. Each `.vue` file becomes a route:
+
+- **`index.vue`** - Main application page
+- Other pages as needed for routing
+
+Since Fylepad is primarily a single-page application, most logic resides in `app.vue` and components.
+
+### utils/
+
+Utility functions shared across the application:
+
+```
+utils/
+├── editor.ts           # Editor-related utilities
+├── exportPDF.ts        # PDF export functionality
+├── functions.ts        # General helper functions
+└── icon.ts             # Icon utilities
+```
+
+Key utilities include:
+- Editor configuration helpers
+- PDF generation from editor content
+- File import/export functions
+
+### stores/
+
+Pinia stores for state management. Stores handle:
+
+- Tab management and state persistence
+- Editor settings and preferences
+- Document state and auto-save
+- Theme and UI preferences
+
+Stores are auto-imported and can be accessed via `useStoreName()` composables.
+
+### src-tauri/
+
+The Rust backend for the desktop application:
+
+```
+src-tauri/
+├── src/
+│   ├── main.rs         # Tauri entry point
+│   └── lib.rs          # Rust libraries
+├── Cargo.toml          # Rust dependencies
+├── tauri.conf.json     # Tauri configuration
+├── build.rs            # Build script
+└── icons/              # Application icons
+```
+
+The Tauri backend provides:
+- Native file system operations
+- Window management
+- Platform-specific integrations
+
+## Data flow
+
+### Editor state management
+
+1. **User Input** → TipTap editor receives user actions
+2. **Editor State** → TipTap manages document state internally
+3. **Extensions** → Custom extensions modify behavior and output
+4. **Store Sync** → Pinia stores persist state to localStorage (web) or file system (desktop)
+5. **Auto-save** → Changes are automatically saved on a debounced timer
+
+### Tab management
+
+1. Tabs are stored in a Pinia store
+2. Each tab maintains its own editor state
+3. Tab state is serialized and saved (JSON for metadata, HTML/Markdown for content)
+4. On app load, tabs are restored from saved state
+
+### File operations
+
+**Web version:**
+- Uses browser File System Access API (where supported)
+- Falls back to download/upload for browsers without support
+- LocalStorage for tab persistence
+
+**Desktop version:**
+- Tauri plugin-fs for native file system access
+- Direct read/write to user's file system
+- Native file dialogs for open/save
+
+## Configuration files
+
+### nuxt.config.ts
+
+Configures the Nuxt application:
+- SSR disabled for static generation
+- Modules: Tailwind, Icon, Color Mode, PWA
+- Vite settings for Tauri integration
+- Development server configuration
+
+### tauri.conf.json
+
+Configures the Tauri desktop application:
+- Build commands: `pnpm run generate` (before build), `pnpm run dev` (before dev)
+- Frontend dist: `../dist`
+- Bundle targets: DMG (macOS), DEB (Linux), MSI (Windows)
+- Window settings: 800x600 default, 600x600 minimum
+
+### package.json
+
+Defines all Node.js dependencies and scripts:
+- 100+ dependencies including TipTap extensions
+- Build scripts for web and desktop
+- Development tooling (TypeScript, Tailwind, etc.)
+
+## Key concepts
+
+### Platform detection
+
+Fylepad detects the runtime environment to enable platform-specific features:
+
+```typescript
+const isTauri = typeof window !== 'undefined' && '__TAURI__' in window
+```
+
+This allows the same codebase to run optimally on web and desktop.
+
+### Extension architecture
+
+TipTap extensions follow a modular pattern:
+1. Extend base TipTap extension classes
+2. Define custom commands and keyboard shortcuts
+3. Implement rendering logic (if custom nodes)
+4. Register with the editor in `components/editor.vue`
+
+### State persistence
+
+State is persisted differently based on platform:
+- **Web**: localStorage + IndexedDB
+- **Desktop**: JSON files in app data directory via Tauri
+
+This ensures data persists across sessions while respecting platform capabilities.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Setup" icon="wrench" href="/development/setup">
+    Set up your development environment
+  </Card>
+  <Card title="Building" icon="hammer" href="/development/building">
+    Build production releases
+  </Card>
+</CardGroup>

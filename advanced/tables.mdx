@@ -1,0 +1,193 @@
+---
+title: Tables
+description: Create and manipulate structured data tables with resizable columns and flexible formatting
+---
+
+Fylepad includes a powerful table editor that lets you organize information in rows and columns. Tables are fully editable and support rich text formatting within cells.
+
+## Creating tables
+
+You can create a table in two ways:
+
+1. Use the slash command menu (`/`) and select "Table"
+2. Click the "Table" button in the bottom toolbar
+
+By default, Fylepad creates a 3×3 table with a header row.
+
+<Note>
+  Tables are ideal for organizing structured data, comparing information, or creating simple layouts.
+</Note>
+
+## Working with rows
+
+When you place your cursor inside a table, the table manipulation toolbar appears at the bottom of the screen.
+
+### Adding rows
+
+Click the **+** button next to "Row" in the toolbar to add a new row after the current row.
+
+### Deleting rows
+
+Click the **−** button next to "Row" in the toolbar to delete the current row.
+
+<Warning>
+  Row deletion cannot be undone with a single undo action. Make sure you want to remove the row before clicking delete.
+</Warning>
+
+## Working with columns
+
+Column operations work the same way as row operations.
+
+### Adding columns
+
+Click the **+** button next to "Column" in the toolbar to add a new column after the current column.
+
+### Deleting columns
+
+Click the **−** button next to "Column" in the toolbar to delete the current column.
+
+## Header cells
+
+Header cells are styled differently to distinguish them from regular cells. They typically appear in bold text.
+
+### Converting cells to headers
+
+1. Place your cursor in the cell you want to convert
+2. Click the "Header Cell" button in the toolbar
+3. The cell will be converted to a header cell
+
+You can convert any cell to a header cell, not just cells in the first row.
+
+### Converting headers to regular cells
+
+Click the "Header Cell" button again when your cursor is in a header cell to convert it back to a regular cell.
+
+## Formatting cell content
+
+Cells support all standard text formatting options:
+
+<Tabs>
+  <Tab title="Basic formatting">
+    - **Bold** (`Ctrl+B` / `Cmd+B`)
+    - *Italic* (`Ctrl+I` / `Cmd+I`)
+    - <u>Underline</u> (`Ctrl+U` / `Cmd+U`)
+    - ~~Strikethrough~~
+    - `Inline code`
+  </Tab>
+  <Tab title="Text color">
+    You can apply custom colors to text within cells:
+    1. Select the text in the cell
+    2. Open the styling panel (paint icon)
+    3. Choose a color from the color picker
+  </Tab>
+  <Tab title="Font family">
+    Change the font family of cell content:
+    1. Select the text in the cell
+    2. Open the styling panel
+    3. Choose a font from the dropdown
+  </Tab>
+  <Tab title="Links">
+    Add hyperlinks within cells:
+    1. Select the text
+    2. Press `Ctrl+K` / `Cmd+K`
+    3. Enter the URL
+  </Tab>
+</Tabs>
+
+## Resizing columns
+
+Fylepad tables support column resizing:
+
+1. Hover over the border between two column headers
+2. Click and drag the border to resize the column
+3. Release to set the new width
+
+<Note>
+  Column resizing is enabled by default. The table will maintain column widths when you save and reload your document.
+</Note>
+
+## Navigating tables
+
+### Keyboard shortcuts
+
+- **Tab**: Move to the next cell (creates a new row if at the last cell)
+- **Shift+Tab**: Move to the previous cell
+- **Arrow keys**: Navigate between cells
+- **Enter**: Create a new line within the current cell
+
+### Selecting cells
+
+Click and drag across cells to select multiple cells. The selected cells will be highlighted.
+
+## Deleting tables
+
+To remove an entire table:
+
+1. Place your cursor anywhere in the table
+2. Click the red "Delete" button in the table toolbar
+3. The entire table will be removed
+
+<Warning>
+  Deleting a table removes all content within it. Use undo (`Ctrl+Z` / `Cmd+Z`) immediately if you delete a table by mistake.
+</Warning>
+
+## Table examples
+
+### Simple data table
+
+| Feature | Free | Pro |
+|---------|------|-----|
+| Notes | Unlimited | Unlimited |
+| Storage | Local | Cloud + Local |
+| Export | Markdown | Markdown + PDF |
+| Diagrams | Yes | Yes |
+| Sync | No | Yes |
+
+### Comparison table
+
+| Aspect | Fylepad | Traditional Notepad |
+|--------|---------|--------------------|
+| Formatting | Rich text | Plain text only |
+| Tables | Supported | Not supported |
+| Diagrams | Mermaid + PlantUML | Not supported |
+| Math | KaTeX support | Not supported |
+| Cross-platform | Yes | Windows only |
+
+### Task tracking table
+
+| Task | Status | Priority | Due Date |
+|------|--------|----------|----------|
+| Write documentation | In Progress | High | 2026-03-15 |
+| Fix table bug | Completed | Medium | 2026-03-01 |
+| Add new feature | Not Started | Low | 2026-03-30 |
+
+## Tips for working with tables
+
+<Accordion title="Plan your structure first">
+  Before creating a large table, sketch out the column headers and approximate row count. This helps you create the right structure from the start.
+</Accordion>
+
+<Accordion title="Use header rows consistently">
+  Always use a header row to label your columns. This makes tables easier to understand and maintain.
+</Accordion>
+
+<Accordion title="Keep tables simple">
+  If your table becomes too complex, consider splitting it into multiple smaller tables or using a different format.
+</Accordion>
+
+<Accordion title="Align text appropriately">
+  Use the text alignment tools to align numbers to the right and text to the left for better readability.
+</Accordion>
+
+## Markdown export
+
+When you export a note containing tables, they are converted to Markdown table syntax:
+
+```markdown
+| Header 1 | Header 2 | Header 3 |
+|----------|----------|----------|
+| Cell 1   | Cell 2   | Cell 3   |
+| Cell 4   | Cell 5   | Cell 6   |
+```
+
+This format is compatible with most Markdown processors and platforms.

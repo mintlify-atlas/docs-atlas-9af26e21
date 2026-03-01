@@ -1,0 +1,162 @@
+---
+title: Rich text editing
+description: Create beautifully formatted notes with Fylepad's powerful TipTap-based editor
+---
+
+Fylepad's rich text editor is powered by TipTap, a modern headless editor built on ProseMirror. You can create formatted content using either visual controls or Markdown syntax.
+
+## Formatting options
+
+### Text styling
+
+Apply basic text formatting with toolbar buttons or keyboard shortcuts:
+
+- **Bold** — Make text stand out with bold formatting
+- *Italic* — Emphasize text with italics
+- <u>Underline</u> — Add underlines to important text
+- ~~Strikethrough~~ — Mark deleted or outdated content
+- <mark>Highlight</mark> — Draw attention with background color
+- Superscript^2^ — Add superscript text
+- Subscript~2~ — Add subscript text
+
+<Tip>
+You can combine multiple formatting styles on the same text. For example, bold + italic + highlight.
+</Tip>
+
+### Headings
+
+Organize your notes with six levels of headings:
+
+```markdown
+# Heading 1
+## Heading 2
+### Heading 3
+#### Heading 4
+##### Heading 5
+###### Heading 6
+```
+
+### Lists
+
+Create structured content with different list types:
+
+<Tabs>
+  <Tab title="Bullet lists">
+    ```markdown
+    - First item
+    - Second item
+      - Nested item
+      - Another nested item
+    - Third item
+    ```
+  </Tab>
+  <Tab title="Numbered lists">
+    ```markdown
+    1. First step
+    2. Second step
+       1. Sub-step
+       2. Another sub-step
+    3. Third step
+    ```
+  </Tab>
+  <Tab title="Task lists">
+    ```markdown
+    - [ ] Uncompleted task
+    - [x] Completed task
+    - [ ] Another task
+    ```
+  </Tab>
+</Tabs>
+
+### Quotes and callouts
+
+Add context with blockquotes:
+
+```markdown
+> This is a blockquote
+> It can span multiple lines
+```
+
+### Links
+
+Create hyperlinks to external resources or other tabs:
+
+```markdown
+[Link text](https://example.com)
+```
+
+<Note>
+Fylepad supports tab linking. Type `@` followed by a tab name to create links between your notes.
+</Note>
+
+## Text customization
+
+### Font selection
+
+Choose from 30+ professional fonts across different categories:
+
+- **Sans-serif** — Inter, Roboto, Open Sans, Lato, Poppins
+- **Serif** — Merriweather, Lora, Playfair Display
+- **Monospace** — Roboto Mono, Fira Code, JetBrains Mono
+- **Display** — Archivo Black, Bebas Neue
+
+Access font selection from the styling menu in the toolbar.
+
+### Text color
+
+Customize text color with:
+
+- Predefined color palette
+- Custom hex color picker
+- Color indicator showing current selection
+
+### Text alignment
+
+Align your content:
+
+- Left aligned (default)
+- Center aligned
+- Right aligned
+- Justified
+
+## Advanced formatting
+
+### Details/Summary (collapsible sections)
+
+Create expandable sections to keep your notes organized:
+
+```markdown
+<details>
+  <summary>Click to expand</summary>
+  Hidden content goes here
+</details>
+```
+
+### Horizontal rules
+
+Separate sections with horizontal rules:
+
+```markdown
+---
+```
+
+## Character count
+
+The editor includes a built-in character counter to track:
+
+- Total characters
+- Character count per selection
+- Word count
+
+The counter appears in the editor status bar.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Markdown support" icon="markdown" href="/features/markdown-support">
+    Learn about Markdown syntax and shortcuts
+  </Card>
+  <Card title="Custom styling" icon="palette" href="/advanced/custom-styling">
+    Customize fonts, colors, and alignment
+  </Card>
+</CardGroup>

@@ -1,0 +1,301 @@
+---
+title: Building
+description: Build Fylepad for production deployment on web and desktop platforms
+---
+
+This guide covers building Fylepad for production distribution on web and desktop platforms.
+
+## Build overview
+
+Fylepad supports multiple build targets:
+
+- **Web build** - Static site for web deployment
+- **Desktop build** - Native applications for Windows, macOS, and Linux
+- **PWA** - Progressive Web App with offline support
+
+## Web builds
+
+### Production build
+
+To build the web version for production deployment:
+
+```bash
+pnpm build
+```
+
+This command:
+1. Runs Nuxt's build process
+2. Generates optimized JavaScript and CSS bundles
+3. Outputs to `.output/public/` directory
+
+### Static site generation
+
+For static hosting (recommended for web deployments):
+
+```bash
+pnpm generate
+```
+
+This creates a fully static version in the `dist/` directory that can be deployed to:
+- Vercel, Netlify, or Cloudflare Pages
+- Any static hosting service
+- CDN for global distribution
+
+<Tip>
+  The static build is what powers the web version at [fylepadapp.vercel.app](https://fylepadapp.vercel.app).
+</Tip>
+
+### Preview build
+
+To preview the production build locally:
+
+```bash
+pnpm preview
+```
+
+This serves the built application at `http://localhost:3000` for testing before deployment.
+
+## Desktop builds
+
+### Building for your platform
+
+To build the desktop application for your current operating system:
+
+```bash
+pnpm tauri:build
+```
+
+This command:
+1. Runs `pnpm install` to ensure dependencies are up to date
+2. Generates the static web assets via `pnpm run generate`
+3. Compiles the Rust backend
+4. Creates platform-specific installers
+
+<Note>
+  The first build can take 10-15 minutes as Rust compiles all dependencies. Subsequent builds are much faster (2-3 minutes).
+</Note>
+
+### Build outputs
+
+Build artifacts are created in `src-tauri/target/release/bundle/`:
+
+<CodeGroup>
+
+```bash macOS
+# DMG installer for distribution
+src-tauri/target/release/bundle/dmg/fylepad_3.0.0_aarch64.dmg  # Apple Silicon
+src-tauri/target/release/bundle/dmg/fylepad_3.0.0_x64.dmg     # Intel
+```
+
+```bash Windows
+# MSI installer for distribution
+src-tauri/target/release/bundle/msi/fylepad_3.0.0_x64_en-US.msi
+```
+
+```bash Linux
+# DEB package for Debian/Ubuntu
+src-tauri/target/release/bundle/deb/fylepad_3.0.0_amd64.deb
+```
+
+</CodeGroup>
+
+### Debug builds
+
+For debugging purposes, you can create a debug build:
+
+```bash
+pnpm tauri:build:debug
+```
+
+Debug builds:
+- Include debugging symbols
+- Are larger in file size
+- Provide better error messages
+- Are not optimized for performance
+
+<Warning>
+  Debug builds should never be distributed to end users. They are significantly larger and slower than release builds.
+</Warning>
+
+## Cross-platform builds
+
+### Building for other platforms
+
+Tauri requires building on the target platform (or using GitHub Actions). You cannot build macOS apps on Windows, for example.
+
+For cross-platform releases, use GitHub Actions or CI/CD:
+
+1. Set up runners for each platform (Windows, macOS, Linux)
+2. Run `pnpm tauri:build` on each runner
+3. Collect artifacts from each build
+
+### Platform-specific considerations
+
+**macOS:**
+- Unsigned apps will require users to run `xattr -c fylepad.app` on Apple Silicon
+- For distribution, you need an Apple Developer account for code signing
+- Build produces both Intel and Apple Silicon versions
+
+**Windows:**
+- MSI installer includes auto-update support
+- May need to configure code signing for Windows Defender
+
+**Linux:**
+- DEB package for Debian/Ubuntu-based distributions
+- Users on other distros can build from source
+
+## Icon generation
+
+To regenerate application icons from the source image:
+
+```bash
+pnpm tauri:icon ./src-tauri/app-icon.png
+```
+
+This creates all required icon sizes and formats:
+- `icons/32x32.png`, `128x128.png`, etc. (PNG)
+- `icons/icon.ico` (Windows)
+- `icons/icon.icns` (macOS)
+
+## Build configuration
+
+### Tauri build settings
+
+Build configuration is in `src-tauri/tauri.conf.json`:
+
+```json
+{
+  "build": {
+    "beforeBuildCommand": "pnpm run generate",
+    "beforeDevCommand": "pnpm run dev",
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:3000"
+  },
+  "bundle": {
+    "targets": ["dmg", "deb", "msi"]
+  }
+}
+```
+
+You can customize:
+- Bundle identifier
+- Version number
+- Target formats
+- Code signing settings
+
+### Nuxt build settings
+
+Nuxt build configuration in `nuxt.config.ts`:
+
+```typescript
+{
+  ssr: false,  // Disable SSR for static generation
+  vite: {
+    clearScreen: false,  // Better Tauri CLI output
+    envPrefix: ['VITE_', 'TAURI_']  // Environment variables
+  }
+}
+```
+
+## Optimizing builds
+
+### Reducing bundle size
+
+1. **Analyze bundle** - Use Vite's build analysis:
+   ```bash
+   ANALYZE=true pnpm build
+   ```
+
+2. **Tree-shaking** - Ensure you're only importing what you need:
+   ```javascript
+   // Good - tree-shakeable
+   import { specificFunction } from 'library'
+   
+   // Avoid - imports everything
+   import * as Library from 'library'
+   ```
+
+3. **Code splitting** - Nuxt automatically splits routes and components
+
+### Build performance
+
+- Use `pnpm` instead of `npm` for faster installs
+- Enable Rust incremental compilation for faster rebuilds
+- Cache `node_modules` and Cargo build artifacts in CI
+
+## Publishing releases
+
+### Creating a release
+
+1. Update version in `package.json` and `src-tauri/tauri.conf.json`
+2. Build for all platforms
+3. Test each platform build
+4. Create GitHub release with:
+   - Version tag (e.g., `v3.0.0`)
+   - Release notes
+   - Attached binaries for each platform
+
+### Version numbering
+
+Fylepad follows semantic versioning (semver):
+- **Major** (3.x.x) - Breaking changes
+- **Minor** (x.1.x) - New features, backwards compatible
+- **Patch** (x.x.1) - Bug fixes
+
+## Troubleshooting builds
+
+<AccordionGroup>
+  <Accordion title="Build fails with Rust compilation errors">
+    Ensure you have the latest Rust toolchain:
+    
+    ```bash
+    rustup update
+    ```
+    
+    Clear Cargo cache and rebuild:
+    
+    ```bash
+    cd src-tauri
+    cargo clean
+    cd ..
+    pnpm tauri:build
+    ```
+  </Accordion>
+
+  <Accordion title="Web build works but desktop build fails">
+    Check that `pnpm generate` completes successfully:
+    
+    ```bash
+    pnpm generate
+    ```
+    
+    Verify that the `dist/` directory contains the built files before running `pnpm tauri:build`.
+  </Accordion>
+
+  <Accordion title="Built app is very large">
+    - Ensure you're using `pnpm tauri:build` (not the debug build)
+    - Check that unused dependencies are removed from `package.json`
+    - Verify Rust is compiling in release mode (not debug)
+  </Accordion>
+
+  <Accordion title="macOS app won't open (unsigned)">
+    For unsigned apps on macOS, users need to run:
+    
+    ```bash
+    xattr -c /path/to/fylepad.app
+    ```
+    
+    For distribution, obtain an Apple Developer account and configure code signing.
+  </Accordion>
+</AccordionGroup>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Setup" icon="wrench" href="/development/setup">
+    Set up your development environment
+  </Card>
+  <Card title="Architecture" icon="sitemap" href="/development/architecture">
+    Learn about the project structure
+  </Card>
+</CardGroup>

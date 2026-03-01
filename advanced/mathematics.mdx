@@ -1,0 +1,393 @@
+---
+title: Mathematics
+description: Write mathematical equations and formulas using KaTeX syntax with instant rendering
+---
+
+Fylepad includes full support for mathematical notation through KaTeX, a fast and easy-to-use LaTeX math renderer. You can create beautifully formatted mathematical equations for academic papers, technical documentation, and educational content.
+
+## Creating math blocks
+
+You can insert a math block in three ways:
+
+1. Type `$$` followed by a space and press Enter
+2. Type `:::math` and press Enter
+3. Use the slash command menu (`/`) and select "Math Block"
+
+<Note>
+  Math blocks render automatically as you type. If you see an error message, check your LaTeX syntax.
+</Note>
+
+## Basic operations
+
+### Arithmetic
+
+```
+E = mc^2
+```
+
+Renders as: E = mc²
+
+```
+a + b = c
+```
+
+```
+x - y = z
+```
+
+```
+a \times b = c
+```
+
+```
+a \div b = c
+```
+
+### Fractions
+
+Use `\frac{numerator}{denominator}` for fractions:
+
+```
+\frac{a}{b}
+```
+
+```
+\frac{x^2 + 2x + 1}{x + 1}
+```
+
+```
+\frac{\partial f}{\partial x}
+```
+
+### Superscripts and subscripts
+
+```
+x^2 + y^2 = z^2
+```
+
+```
+a_1 + a_2 + a_3 + ... + a_n
+```
+
+```
+x^{2n+1}
+```
+
+```
+a_{i,j}
+```
+
+## Advanced expressions
+
+### Square roots
+
+```
+\sqrt{x}
+```
+
+```
+\sqrt[3]{x}
+```
+
+```
+\sqrt{x^2 + y^2}
+```
+
+### Calculus
+
+Derivatives:
+
+```
+\frac{d}{dx}(x^2) = 2x
+```
+
+Integrals:
+
+```
+\int_{0}^{\infty} e^{-x} dx = 1
+```
+
+Limits:
+
+```
+\lim_{x \to \infty} \frac{1}{x} = 0
+```
+
+Summation:
+
+```
+\sum_{i=1}^{n} i = \frac{n(n+1)}{2}
+```
+
+Product:
+
+```
+\prod_{i=1}^{n} i = n!
+```
+
+### Greek letters
+
+Lowercase:
+```
+\alpha, \beta, \gamma, \delta, \epsilon, \theta, \lambda, \mu, \pi, \sigma, \omega
+```
+
+Uppercase:
+```
+\Gamma, \Delta, \Theta, \Lambda, \Xi, \Pi, \Sigma, \Omega
+```
+
+### Trigonometry
+
+```
+\sin(x), \cos(x), \tan(x)
+```
+
+```
+\sin^2(x) + \cos^2(x) = 1
+```
+
+```
+\arcsin(x), \arccos(x), \arctan(x)
+```
+
+## Matrices and vectors
+
+### Vectors
+
+```
+\vec{v} = \begin{bmatrix} x \\ y \\ z \end{bmatrix}
+```
+
+### Matrices
+
+```
+A = \begin{bmatrix}
+a_{11} & a_{12} & a_{13} \\
+a_{21} & a_{22} & a_{23} \\
+a_{31} & a_{32} & a_{33}
+\end{bmatrix}
+```
+
+### Determinants
+
+```
+\det(A) = \begin{vmatrix}
+a & b \\
+c & d
+\end{vmatrix} = ad - bc
+```
+
+## Common mathematical expressions
+
+<Tabs>
+  <Tab title="Algebra">
+    Quadratic formula:
+    ```
+    x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+    ```
+    
+    Binomial theorem:
+    ```
+    (x + y)^n = \sum_{k=0}^{n} \binom{n}{k} x^{n-k} y^k
+    ```
+  </Tab>
+  <Tab title="Calculus">
+    Chain rule:
+    ```
+    \frac{d}{dx}[f(g(x))] = f'(g(x)) \cdot g'(x)
+    ```
+    
+    Taylor series:
+    ```
+    f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!}(x-a)^n
+    ```
+  </Tab>
+  <Tab title="Statistics">
+    Normal distribution:
+    ```
+    f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2}
+    ```
+    
+    Standard deviation:
+    ```
+    \sigma = \sqrt{\frac{1}{N}\sum_{i=1}^{N}(x_i - \mu)^2}
+    ```
+  </Tab>
+  <Tab title="Linear algebra">
+    Eigenvalue equation:
+    ```
+    A\vec{v} = \lambda\vec{v}
+    ```
+    
+    Dot product:
+    ```
+    \vec{a} \cdot \vec{b} = |\vec{a}||\vec{b}|\cos(\theta)
+    ```
+  </Tab>
+</Tabs>
+
+## Formatting and styling
+
+### Text in equations
+
+Use `\text{}` to include regular text:
+
+```
+\text{Area} = \pi r^2
+```
+
+### Spacing
+
+Control spacing with these commands:
+- `\,` - thin space
+- `\:` - medium space
+- `\;` - thick space
+- `\quad` - 1em space
+- `\qquad` - 2em space
+
+### Alignment
+
+For multi-line equations:
+
+```
+\begin{aligned}
+f(x) &= x^2 + 2x + 1 \\
+     &= (x + 1)^2
+\end{aligned}
+```
+
+## Special symbols
+
+<Accordion title="Relations">
+  - `\leq` ≤ (less than or equal)
+  - `\geq` ≥ (greater than or equal)
+  - `\neq` ≠ (not equal)
+  - `\approx` ≈ (approximately equal)
+  - `\equiv` ≡ (equivalent)
+  - `\sim` ∼ (similar to)
+</Accordion>
+
+<Accordion title="Operators">
+  - `\pm` ± (plus-minus)
+  - `\mp` ∓ (minus-plus)
+  - `\cdot` · (multiplication dot)
+  - `\times` × (times)
+  - `\div` ÷ (division)
+  - `\nabla` ∇ (nabla/del)
+  - `\partial` ∂ (partial derivative)
+</Accordion>
+
+<Accordion title="Set theory">
+  - `\in` ∈ (element of)
+  - `\notin` ∉ (not element of)
+  - `\subset` ⊂ (subset)
+  - `\supset` ⊃ (superset)
+  - `\cup` ∪ (union)
+  - `\cap` ∩ (intersection)
+  - `\emptyset` ∅ (empty set)
+</Accordion>
+
+<Accordion title="Logic">
+  - `\forall` ∀ (for all)
+  - `\exists` ∃ (exists)
+  - `\neg` ¬ (negation)
+  - `\land` ∧ (logical and)
+  - `\lor` ∨ (logical or)
+  - `\implies` ⇒ (implies)
+  - `\iff` ⇔ (if and only if)
+</Accordion>
+
+## Real-world examples
+
+### Physics
+
+Newton's second law:
+```
+F = ma
+```
+
+Schrödinger equation:
+```
+i\hbar\frac{\partial}{\partial t}\Psi = \hat{H}\Psi
+```
+
+Lorentz factor:
+```
+\gamma = \frac{1}{\sqrt{1 - \frac{v^2}{c^2}}}
+```
+
+### Computer science
+
+Big O notation:
+```
+O(n \log n)
+```
+
+Recurrence relation:
+```
+T(n) = 2T(\frac{n}{2}) + \Theta(n)
+```
+
+### Economics
+
+Compound interest:
+```
+A = P\left(1 + \frac{r}{n}\right)^{nt}
+```
+
+### Engineering
+
+Ohm's law:
+```
+V = IR
+```
+
+Reynolds number:
+```
+Re = \frac{\rho vL}{\mu}
+```
+
+## Tips for writing equations
+
+<Note>
+  **Preview as you type**: Math blocks render in real-time. Watch the preview to catch syntax errors immediately.
+</Note>
+
+<Note>
+  **Use brackets consistently**: Matching brackets `{}` are required for superscripts, subscripts, and fractions with multiple characters.
+</Note>
+
+<Note>
+  **Reference KaTeX documentation**: For advanced symbols and commands, check the [KaTeX support table](https://katex.org/docs/support_table.html).
+</Note>
+
+<Warning>
+  Some LaTeX commands are not supported by KaTeX. If an equation doesn't render, verify that all commands are KaTeX-compatible.
+</Warning>
+
+## Common errors and solutions
+
+| Error | Cause | Solution |
+|-------|-------|----------|
+| Missing closing bracket | Unmatched `{` or `}` | Count your brackets carefully |
+| Undefined control sequence | Unknown command | Check command spelling or use alternative |
+| Extra alignment tab | Wrong alignment syntax | Use `\\` for line breaks, `&` for alignment |
+| Missing $ inserted | Incorrect mode | Ensure you're in a math block |
+
+## Exporting equations
+
+When you export your note as Markdown, math blocks are preserved in standard LaTeX syntax:
+
+```markdown
+$$
+E = mc^2
+$$
+```
+
+This format is compatible with:
+- GitHub (with certain limitations)
+- Jupyter Notebooks
+- R Markdown
+- Academic publishing platforms
+- Most LaTeX processors

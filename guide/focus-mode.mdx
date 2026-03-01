@@ -1,0 +1,198 @@
+---
+title: Focus mode
+description: Enter focus mode for distraction-free writing in Fylepad
+---
+
+Focus mode transforms Fylepad into a minimal, distraction-free writing environment. When you need to concentrate on your words without any UI elements getting in the way, focus mode is your solution.
+
+## What is focus mode?
+
+Focus mode hides all non-essential UI elements to create a clean writing space:
+
+<CardGroup cols={2}>
+  <Card title="Hidden elements" icon="eye-slash">
+    - Tab bar (horizontal) or sidebar (vertical)
+    - Toolbar and all formatting buttons
+    - Status indicators (character/word count)
+    - Block menu prompt text
+  </Card>
+  
+  <Card title="Visible elements" icon="eye">
+    - Your note title (top-left corner)
+    - Your content in the editor
+    - Focus mode toggle button
+    - Print button (when in focus mode)
+  </Card>
+</CardGroup>
+
+<Note>
+Focus mode doesn't disable any functionality—you can still type, format text using markdown or keyboard shortcuts, and use the `/` block menu. It simply hides the UI.
+</Note>
+
+## Entering focus mode
+
+There are three ways to activate focus mode:
+
+<Tabs>
+  <Tab title="Keyboard shortcut">
+    Press `Ctrl + R` at any time to toggle focus mode on or off
+  </Tab>
+  
+  <Tab title="Click the icon">
+    Click the focus mode icon in the bottom-right corner (looks like a fullscreen symbol)
+  </Tab>
+  
+  <Tab title="Alternative shortcut">
+    Press `Ctrl + P` when not in focus mode (this also works to toggle it)
+  </Tab>
+</Tabs>
+
+## Using focus mode
+
+Once in focus mode, you'll notice immediate changes:
+
+<Steps>
+  <Step title="UI disappears">
+    All toolbars, tabs, and buttons fade away with a smooth transition
+  </Step>
+  
+  <Step title="Editor expands">
+    Your content area expands to fill the screen, providing maximum space for writing
+  </Step>
+  
+  <Step title="Title shows">
+    Your note title appears in the top-left corner for context
+  </Step>
+  
+  <Step title="Controls remain accessible">
+    The focus mode toggle and print button stay visible in the top-right corner
+  </Step>
+</Steps>
+
+### What you can still do
+
+<AccordionGroup>
+  <Accordion title="Write and format">
+    All text formatting works normally. Use markdown syntax or the `/` block menu to add:
+    - Headings with `#`
+    - Bold with `**text**`
+    - Lists with `-` or `1.`
+    - Code blocks, tables, and diagrams via `/` menu
+  </Accordion>
+  
+  <Accordion title="Search">
+    Press `Ctrl + F` to open the floating search bar, which remains accessible in focus mode
+  </Accordion>
+  
+  <Accordion title="Print">
+    The print button appears in the top-right when in focus mode. Click it or press `Ctrl + P` to print your note.
+  </Accordion>
+  
+  <Accordion title="Switch tabs">
+    While tab UI is hidden, keyboard shortcuts still work:
+    - `Alt + [number]` to switch tabs
+    - `Ctrl + K` to open the command palette
+    - `Ctrl + N` to create a new tab
+  </Accordion>
+</AccordionGroup>
+
+<Warning>
+Be careful with tab shortcuts in focus mode! Since the tab bar is hidden, it's easy to forget which tab you're on. The title in the top-left helps track this.
+</Warning>
+
+## Exiting focus mode
+
+Leaving focus mode is just as easy:
+
+<Tabs>
+  <Tab title="Keyboard shortcut">
+    Press `Ctrl + R` again to toggle focus mode off
+  </Tab>
+  
+  <Tab title="Click the icon">
+    Click the focus mode icon in the top-right corner
+  </Tab>
+  
+  <Tab title="Command palette">
+    Open the command palette (`Ctrl + K`) and navigate tabs normally—this automatically exits focus mode
+  </Tab>
+</Tabs>
+
+All your UI elements will smoothly fade back in, and you'll return to the normal editing view.
+
+## Focus mode behavior
+
+### Tab layout considerations
+
+<Tabs>
+  <Tab title="Horizontal tabs">
+    When you enter focus mode with horizontal tabs:
+    - The top tab bar disappears completely
+    - Content moves up to use the full screen height
+    - Exiting focus mode restores the tab bar
+  </Tab>
+  
+  <Tab title="Vertical tabs">
+    When you enter focus mode with vertical tabs:
+    - The left sidebar disappears
+    - Content expands to use the full screen width
+    - The sidebar state (open/closed) is preserved when exiting
+  </Tab>
+</Tabs>
+
+### Focus mode state
+
+<Note>
+Focus mode state is **not** saved between sessions. When you reopen Fylepad, you'll always start in normal mode, even if you closed the app while in focus mode.
+</Note>
+
+## When to use focus mode
+
+Focus mode is ideal for:
+
+<CardGroup cols={2}>
+  <Card title="Long-form writing" icon="book">
+    Writing essays, articles, or stories where you need uninterrupted flow
+  </Card>
+  
+  <Card title="Brainstorming" icon="lightbulb">
+    Capturing ideas quickly without UI distractions
+  </Card>
+  
+  <Card title="Editing sessions" icon="pen">
+    Reviewing and revising content with full focus on the text
+  </Card>
+  
+  <Card title="Presentation mode" icon="presentation">
+    Displaying notes during meetings or presentations with minimal UI
+  </Card>
+</CardGroup>
+
+## Tips for focus mode
+
+<Tip>
+**Create a ritual:** Make entering focus mode part of your writing ritual. The visual change can help signal to your brain that it's time to focus.
+</Tip>
+
+<Tip>
+**Combine with full screen:** Put your browser or app in full-screen mode (`F11` in most browsers) along with Fylepad's focus mode for complete immersion.
+</Tip>
+
+<Tip>
+**Use before printing:** Focus mode is automatically enabled when you print, giving you a clean preview of your content without UI elements.
+</Tip>
+
+## Accessibility
+
+Focus mode maintains all keyboard accessibility:
+
+- All keyboard shortcuts continue to work
+- Screen readers can still access content
+- Navigation remains fully functional
+- The focus mode toggle is always visible and accessible
+
+<CardGroup cols={1}>
+  <Card title="Remember the shortcut" icon="keyboard">
+    `Ctrl + R` is your quick toggle—memorize it for instant access to distraction-free writing.
+  </Card>
+</CardGroup>

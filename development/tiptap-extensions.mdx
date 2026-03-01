@@ -1,0 +1,341 @@
+---
+title: TipTap extensions
+description: Learn about the custom TipTap extensions that power Fylepad's rich editing features
+---
+
+Fylepad's editor is built on TipTap, a headless editor framework based on ProseMirror. The app includes numerous custom extensions that add unique functionality beyond standard Markdown editing.
+
+## Extension architecture
+
+TipTap extensions follow a modular architecture:
+
+```typescript
+import { Extension } from "@tiptap/core";
+
+export const CustomExtension = Extension.create({
+  name: "customExtension",
+  addOptions() {
+    return { /* options */ };
+  },
+  addCommands() {
+    return { /* commands */ };
+  },
+  addStorage() {
+    return { /* storage */ };
+  },
+});
+```
+
+Each extension can provide:
+- **Commands** — Actions that modify the editor state
+- **Input rules** — Shortcuts that trigger on typing
+- **Keyboard shortcuts** — Hotkeys for commands
+- **Node views** — Custom rendering for content
+- **Storage** — Extension-specific data
+
+## Core TipTap extensions
+
+Fylepad uses these built-in TipTap extensions:
+
+### Document structure
+- **@tiptap/extension-document** — Root document node
+- **@tiptap/extension-paragraph** — Paragraph blocks
+- **@tiptap/extension-heading** — Six heading levels
+- **@tiptap/extension-text** — Text nodes
+
+### Text formatting
+- **@tiptap/extension-bold** — Bold text
+- **@tiptap/extension-italic** — Italic text
+- **@tiptap/extension-underline** — Underline text
+- **@tiptap/extension-strike** — Strikethrough
+- **@tiptap/extension-code** — Inline code
+- **@tiptap/extension-highlight** — Text highlighting
+- **@tiptap/extension-subscript** — Subscript text
+- **@tiptap/extension-superscript** — Superscript text
+
+### Styling
+- **@tiptap/extension-color** — Text color customization
+- **@tiptap/extension-text-style** — Text styling framework
+- **@tiptap/extension-font-family** — Font selection
+- **@tiptap/extension-text-align** — Text alignment
+
+### Lists and tasks
+- **@tiptap/extension-bullet-list** — Bullet lists
+- **@tiptap/extension-ordered-list** — Numbered lists
+- **@tiptap/extension-list-item** — List item nodes
+- **@tiptap/extension-list-keymap** — List keyboard shortcuts
+- **@tiptap/extension-task-list** — Task lists
+- **@tiptap/extension-task-item** — Task items with checkboxes
+
+### Rich content
+- **@tiptap/extension-link** — Hyperlinks
+- **@tiptap/extension-image** — Image embeds
+- **@tiptap/extension-code-block-lowlight** — Syntax highlighting
+- **@tiptap/extension-blockquote** — Blockquotes
+- **@tiptap/extension-horizontal-rule** — Horizontal rules
+
+### Tables
+- **@tiptap/extension-table** — Table structure
+- **@tiptap/extension-table-row** — Table rows
+- **@tiptap/extension-table-cell** — Table cells
+- **@tiptap/extension-table-header** — Header cells
+
+### Advanced features
+- **@tiptap/extension-details** — Collapsible details/summary
+- **@tiptap/extension-mathematics** — KaTeX math rendering
+- **@tiptap/extension-emoji** — Emoji support
+- **@tiptap/extension-typography** — Smart typography replacements
+
+### Editor utilities
+- **@tiptap/extension-placeholder** — Placeholder text
+- **@tiptap/extension-character-count** — Character/word counting
+- **@tiptap/extension-drag-handle** — Drag and drop blocks
+- **@tiptap/extension-file-handler** — File paste/drop handling
+
+### Menus
+- **@tiptap/extension-bubble-menu** — Selection-based menu
+- **@tiptap/extension-floating-menu** — Empty line menu
+
+## Custom Fylepad extensions
+
+Fylepad implements several custom extensions:
+
+### ColorHighlighter
+
+Automatic color preview for hex codes:
+
+```typescript
+// extensions/ColorHighlighter.ts
+import { Extension } from "@tiptap/core";
+import { Decoration, DecorationSet } from "@tiptap/pm/view";
+
+export const ColorHighlighter = Extension.create({
+  name: "colorHighlighter",
+  // Adds color swatches next to hex codes
+});
+```
+
+**Features:**
+- Detects hex color codes in text
+- Shows color preview inline
+- Updates in real-time as you type
+
+### ImageResize
+
+Drag-to-resize images:
+
+```typescript
+// extensions/ImageResize.ts
+export const ImageResize = Extension.create({
+  name: "imageResize",
+  // Adds resize handles to images
+});
+```
+
+**Features:**
+- Corner resize handles
+- Maintains aspect ratio
+- Live preview while resizing
+
+### SmilieReplacer
+
+Auto-replace text emoticons with emoji:
+
+```typescript
+// extensions/SmilieReplacer.ts
+export const SmilieReplacer = Extension.create({
+  name: "smilieReplacer",
+  // :) -> 🙂, :( -> ☹️, etc.
+});
+```
+
+### Hyperlink
+
+Enhanced link handling:
+
+```typescript
+// extensions/hyperlink.ts
+export const Hyperlink = Extension.create({
+  name: "hyperlink",
+  // Auto-detect URLs, click to edit
+});
+```
+
+**Features:**
+- Auto-hyperlink detection
+- Click to edit links
+- Paste URL handling
+
+### TabLinkSuggestion
+
+Inter-tab linking system:
+
+```typescript
+// extensions/TabLinkSuggestion.ts
+export const TabLinkSuggestion = Extension.create({
+  name: "tabLinkSuggestion",
+  // @ mentions for linking between tabs
+});
+```
+
+**Features:**
+- Type `@` to see tab suggestions
+- Creates clickable links to other tabs
+- Auto-updates when tabs are renamed
+
+## Helper extensions
+
+Fylepad includes helper extensions in `extensions/helpers/`:
+
+### autoHyperlink
+
+Automatically converts URLs to links:
+
+```typescript
+// extensions/helpers/autoHyperlink.ts
+export function autoHyperlink(editor) {
+  // Detects URLs and converts to links
+}
+```
+
+### editHyperlink
+
+Click-to-edit link functionality:
+
+```typescript
+// extensions/helpers/editHyperlink.ts
+export function editHyperlink(editor) {
+  // Opens link editor on click
+}
+```
+
+### pasteHandler
+
+Custom paste behavior:
+
+```typescript
+// extensions/helpers/pasteHandler.ts
+export function pasteHandler(editor) {
+  // Handles pasted content, files, images
+}
+```
+
+### clickHandler
+
+Custom click behaviors:
+
+```typescript
+// extensions/helpers/clickHandler.ts
+export function clickHandler(editor) {
+  // Handles clicks on links, checkboxes, etc.
+}
+```
+
+### tippyHelper
+
+Tooltip integration:
+
+```typescript
+// extensions/helpers/tippyHelper.ts
+import tippy from "tippy.js";
+
+export function tippyHelper() {
+  // Creates tooltips for UI elements
+}
+```
+
+## Markdown extension
+
+The Markdown extension provides bidirectional conversion:
+
+```typescript
+// extensions/markdown/index.ts
+import { Extension } from "@tiptap/core";
+import { unified } from "unified";
+import remarkParse from "remark-parse";
+import remarkStringify from "remark-stringify";
+import remarkGfm from "remark-gfm";
+import remarkDirective from "remark-directive";
+
+export const Markdown = Extension.create({
+  name: "markdown",
+  addStorage() {
+    return {
+      processor: unified()
+        .use(remarkParse)
+        .use(remarkStringify)
+        .use(remarkGfm)
+        .use(remarkDirective),
+      get: () => { /* serialize to markdown */ },
+      set: (markdown) => { /* parse markdown */ },
+    };
+  },
+});
+```
+
+See [Markdown parser](/development/markdown-parser) for details.
+
+## Menu extensions
+
+Fylepad includes custom menu systems:
+
+### Block menu
+
+Insert blocks with `/` command:
+
+```typescript
+// extensions/block-menu/menu.ts
+export const BlockMenu = Extension.create({
+  name: "blockMenu",
+  // Triggered by typing '/'
+  // Shows: headings, lists, code blocks, tables, diagrams, etc.
+});
+```
+
+### Float menu
+
+Shows on empty lines:
+
+```typescript
+// extensions/float-menu/view.ts
+export const FloatMenu = Extension.create({
+  name: "floatMenu",
+  // Appears on blank lines
+  // Quick access to common blocks
+});
+```
+
+## Extension registration
+
+Extensions are registered in the editor configuration:
+
+```typescript
+// Example from components/editor.vue
+import { Editor } from "@tiptap/vue-3";
+import StarterKit from "@tiptap/starter-kit";
+import { Mermaid } from "@/extensions/nodes/mermaid";
+import { Plantuml } from "@/extensions/nodes/plantuml";
+// ... other imports
+
+const editor = new Editor({
+  extensions: [
+    StarterKit,
+    Mermaid,
+    Plantuml,
+    Mathematics,
+    Table,
+    // ... all extensions
+  ],
+});
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Custom nodes" icon="cube" href="/development/custom-nodes">
+    Learn about custom node implementations
+  </Card>
+  <Card title="Markdown parser" icon="markdown" href="/development/markdown-parser">
+    Understand the Markdown parsing system
+  </Card>
+</CardGroup>

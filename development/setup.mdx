@@ -1,0 +1,192 @@
+---
+title: Development setup
+description: Set up your local development environment for building and running Fylepad
+---
+
+This guide walks you through setting up a development environment for Fylepad.
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+<Steps>
+  <Step title="Node.js">
+    Install Node.js v18 or later. You can download it from [nodejs.org](https://nodejs.org).
+    
+    Verify your installation:
+    ```bash
+    node --version
+    ```
+  </Step>
+
+  <Step title="pnpm">
+    Fylepad uses pnpm as its package manager. Install it globally:
+    
+    ```bash
+    npm install -g pnpm
+    ```
+    
+    Verify your installation:
+    ```bash
+    pnpm --version
+    ```
+  </Step>
+
+  <Step title="Rust (for desktop builds)">
+    If you plan to build the desktop application, install Rust via [rustup](https://rustup.rs):
+    
+    ```bash
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    ```
+    
+    Follow the Tauri [prerequisites guide](https://tauri.app/v2/guides/getting-started/prerequisites) for platform-specific dependencies:
+    
+    - **Windows**: Microsoft Visual Studio C++ Build Tools
+    - **macOS**: Xcode Command Line Tools
+    - **Linux**: System dependencies (webkit2gtk, etc.)
+  </Step>
+</Steps>
+
+## Clone the repository
+
+Clone the Fylepad repository and navigate to the project directory:
+
+```bash
+git clone https://github.com/imrofayel/fylepad.git
+cd fylepad
+```
+
+## Install dependencies
+
+Install all required Node.js packages:
+
+```bash
+pnpm install
+```
+
+This command will:
+- Install all dependencies from `package.json`
+- Run the `postinstall` script to prepare the Nuxt environment
+- Set up the Tauri CLI if building for desktop
+
+## Development servers
+
+### Web development
+
+To run the web version with hot module replacement:
+
+```bash
+pnpm dev
+```
+
+This starts the Nuxt development server at `http://localhost:3000`. The server will automatically reload when you make changes to the code.
+
+<Note>
+  The development server is configured to be accessible on your network (`0.0.0.0`) for testing on mobile devices.
+</Note>
+
+### Desktop development
+
+To run the desktop application in development mode:
+
+```bash
+pnpm tauri:dev
+```
+
+This command will:
+1. Start the Nuxt development server
+2. Launch the Tauri development window
+3. Enable hot reloading for both frontend and backend changes
+
+<Tip>
+  The first build may take several minutes as Rust compiles all dependencies. Subsequent builds will be much faster.
+</Tip>
+
+## Project structure
+
+After setup, your project structure will look like this:
+
+```
+fylepad/
+├── components/          # Vue components
+├── extensions/          # TipTap custom extensions
+├── pages/              # Nuxt pages (file-based routing)
+├── utils/              # Utility functions
+├── stores/             # Pinia state stores
+├── assets/             # CSS and static assets
+├── public/             # Public static files
+├── src-tauri/          # Rust backend code
+│   ├── src/           # Rust source files
+│   ├── Cargo.toml     # Rust dependencies
+│   └── tauri.conf.json # Tauri configuration
+├── nuxt.config.ts      # Nuxt configuration
+├── package.json        # Node.js dependencies
+└── tailwind.config.js  # Tailwind configuration
+```
+
+## Environment configuration
+
+Fylepad uses environment variables prefixed with `VITE_` or `TAURI_` (configured in `nuxt.config.ts`).
+
+Create a `.env` file in the project root for any environment-specific settings:
+
+```bash
+# Example .env file
+VITE_API_URL=http://localhost:3000
+```
+
+## Verifying your setup
+
+To verify everything is working correctly:
+
+<Steps>
+  <Step title="Run the web dev server">
+    ```bash
+    pnpm dev
+    ```
+    Visit `http://localhost:3000` and verify the editor loads.
+  </Step>
+
+  <Step title="Run the desktop app (optional)">
+    ```bash
+    pnpm tauri:dev
+    ```
+    Verify the desktop window opens and the editor functions properly.
+  </Step>
+</Steps>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Port 3000 already in use">
+    If port 3000 is occupied, you can specify a different port:
+    
+    ```bash
+    PORT=3001 pnpm dev
+    ```
+  </Accordion>
+
+  <Accordion title="Tauri build fails on first run">
+    Ensure you have installed all platform-specific prerequisites. Check the [Tauri prerequisites guide](https://tauri.app/v2/guides/getting-started/prerequisites) for your operating system.
+  </Accordion>
+
+  <Accordion title="pnpm install fails">
+    Try clearing the pnpm cache and reinstalling:
+    
+    ```bash
+    pnpm store prune
+    pnpm install
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Architecture" icon="sitemap" href="/development/architecture">
+    Learn about the project structure
+  </Card>
+  <Card title="Building" icon="hammer" href="/development/building">
+    Build Fylepad for production
+  </Card>
+</CardGroup>

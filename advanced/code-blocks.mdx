@@ -1,0 +1,289 @@
+---
+title: Code blocks
+description: Write and display code with syntax highlighting for over 100 programming languages
+---
+
+Fylepad includes a powerful code editor with syntax highlighting support for all major programming languages. Code blocks are perfect for documenting code snippets, technical notes, and programming tutorials.
+
+## Creating code blocks
+
+You can create a code block in two ways:
+
+1. Type `/` and select "Code Block" from the menu
+2. Use the keyboard shortcut: Type three backticks (\`\`\`) followed by Enter
+
+## Syntax highlighting
+
+Fylepad uses Lowlight for syntax highlighting, supporting over 100 programming languages including:
+
+<Tabs>
+  <Tab title="Web development">
+    - JavaScript / TypeScript
+    - HTML
+    - CSS / SCSS / SASS
+    - JSX / TSX
+    - Vue
+    - React
+    - Svelte
+  </Tab>
+  <Tab title="Backend languages">
+    - Python
+    - Java
+    - C / C++ / C#
+    - Go
+    - Rust
+    - Ruby
+    - PHP
+    - Kotlin
+    - Swift
+  </Tab>
+  <Tab title="Data & scripting">
+    - SQL
+    - Bash / Shell
+    - PowerShell
+    - R
+    - Perl
+    - Lua
+  </Tab>
+  <Tab title="Markup & config">
+    - Markdown
+    - JSON
+    - YAML
+    - TOML
+    - XML
+    - INI
+  </Tab>
+</Tabs>
+
+<Note>
+  Syntax highlighting is applied automatically based on the language you specify. If no language is specified, the code is displayed without highlighting.
+</Note>
+
+## Language selection
+
+To enable syntax highlighting for a specific language:
+
+1. Click inside the code block
+2. The language selector will appear in the top-right corner
+3. Type the language name or select it from the dropdown
+4. Syntax highlighting will be applied automatically
+
+Common language identifiers:
+- `javascript` or `js`
+- `typescript` or `ts`
+- `python` or `py`
+- `bash` or `shell`
+- `html`
+- `css`
+- `json`
+- `yaml`
+- `markdown` or `md`
+
+## Code examples
+
+### JavaScript example
+
+```javascript
+function fibonacci(n) {
+  if (n <= 1) return n;
+  return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+const result = fibonacci(10);
+console.log(`Fibonacci(10) = ${result}`);
+```
+
+### Python example
+
+```python
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    return quick_sort(left) + middle + quick_sort(right)
+
+numbers = [3, 6, 8, 10, 1, 2, 1]
+print(quick_sort(numbers))
+```
+
+### TypeScript example
+
+```typescript
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+class UserService {
+  private users: User[] = [];
+
+  addUser(user: User): void {
+    this.users.push(user);
+  }
+
+  getUserById(id: number): User | undefined {
+    return this.users.find(u => u.id === id);
+  }
+}
+
+const service = new UserService();
+service.addUser({ id: 1, name: "Alice", email: "alice@example.com" });
+```
+
+### HTML example
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fylepad</title>
+</head>
+<body>
+  <header>
+    <h1>Welcome to Fylepad</h1>
+  </header>
+  <main>
+    <p>A powerful cross-platform notepad application.</p>
+  </main>
+</body>
+</html>
+```
+
+### CSS example
+
+```css
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  max-width: 600px;
+  width: 100%;
+}
+```
+
+### Bash example
+
+```bash
+#!/bin/bash
+
+# Backup script
+BACKUP_DIR="/backup"
+SOURCE_DIR="/home/user/documents"
+DATE=$(date +%Y-%m-%d_%H-%M-%S)
+
+if [ ! -d "$BACKUP_DIR" ]; then
+  mkdir -p "$BACKUP_DIR"
+fi
+
+tar -czf "${BACKUP_DIR}/backup_${DATE}.tar.gz" "$SOURCE_DIR"
+echo "Backup completed: backup_${DATE}.tar.gz"
+```
+
+### JSON example
+
+```json
+{
+  "name": "fylepad",
+  "version": "1.0.0",
+  "description": "Cross-platform notepad application",
+  "features": [
+    "Rich text editing",
+    "Syntax highlighting",
+    "Diagram support",
+    "Math equations"
+  ],
+  "platforms": {
+    "desktop": true,
+    "mobile": true,
+    "web": true
+  }
+}
+```
+
+## Inline code
+
+For short code snippets within regular text, use inline code formatting:
+
+1. Select the text you want to format as code
+2. Use the keyboard shortcut `Ctrl+E` (Windows/Linux) or `Cmd+E` (Mac)
+3. Or wrap the text with single backticks: \`code\`
+
+Example: Use the `console.log()` function to output text in JavaScript.
+
+## Code block features
+
+<Accordion title="Line wrapping">
+  Long lines of code automatically wrap in code blocks to prevent horizontal scrolling. This makes it easier to view code on smaller screens.
+</Accordion>
+
+<Accordion title="Monospace font">
+  Code blocks use the Roboto Mono font by default, which is optimized for code readability. The font ensures proper alignment of characters.
+</Accordion>
+
+<Accordion title="Dark mode support">
+  Code blocks have dedicated color schemes for both light and dark modes. Syntax highlighting adapts automatically to match your theme.
+</Accordion>
+
+<Accordion title="Copy and paste">
+  You can copy code from code blocks while preserving formatting. Paste code from external sources directly into code blocks.
+</Accordion>
+
+## Tips for using code blocks
+
+<Note>
+  **Always specify the language** for syntax highlighting. This makes your code more readable and easier to understand.
+</Note>
+
+<Note>
+  **Use consistent indentation** within your code blocks. Fylepad preserves your formatting exactly as you type it.
+</Note>
+
+<Note>
+  **Add comments** to explain complex code. Comments help you and others understand the code's purpose.
+</Note>
+
+<Note>
+  **Keep code blocks focused**. If you have multiple distinct code samples, use separate code blocks rather than combining them.
+</Note>
+
+## Exporting code
+
+When you export your note as Markdown, code blocks are preserved with their language specifiers:
+
+```markdown
+\`\`\`javascript
+function hello() {
+  console.log("Hello, world!");
+}
+\`\`\`
+```
+
+This format is compatible with GitHub, GitLab, and most Markdown processors.
+
+## Code block keyboard shortcuts
+
+| Action | Shortcut |
+|--------|----------|
+| Create code block | `Ctrl+Alt+C` / `Cmd+Option+C` |
+| Insert inline code | `Ctrl+E` / `Cmd+E` |
+| Exit code block | `Escape` (when at start or end) |
+| Create new line | `Enter` |
+| Indent line | `Tab` |
+| Outdent line | `Shift+Tab` |

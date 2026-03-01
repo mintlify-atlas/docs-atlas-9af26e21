@@ -1,80 +1,259 @@
 ---
 title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+description: "Get started with Fylepad and create your first note in minutes"
 ---
 
-## Get started in three steps
+## Get up and running
 
-Get your documentation site running locally and make your first customization.
+This guide will walk you through installing Fylepad and creating your first note with Markdown formatting.
 
-### Step 1: Set up your local environment
-
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
+<Steps>
+  <Step title="Install Fylepad">
+    If you haven't already, download and install Fylepad for your platform:
     
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
+    <CardGroup cols={2}>
+      <Card title="Desktop installation" icon="download" href="/installation#desktop-installation">
+        Install on Windows, macOS, or Linux
+      </Card>
+      
+      <Card title="Web version" icon="globe" href="https://fylepadapp.vercel.app/">
+        Use directly in your browser
+      </Card>
+    </CardGroup>
+  </Step>
+  
+  <Step title="Launch the application">
+    Open Fylepad from your applications menu, desktop shortcut, or by visiting the web version.
     
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 2: Deploy your changes
-
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
+    You'll see a clean, minimal interface with:
+    - A tab bar at the top for managing multiple notes
+    - The main editor area in the center
+    - A toolbar with formatting options
+  </Step>
+  
+  <Step title="Create your first note">
+    The app opens with a default tab ready for you to start typing. Try entering some text:
     
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+    ```markdown
+    # My First Note
+    
+    Welcome to **Fylepad**! This is a note-taking app that supports *Markdown* formatting.
+    
+    ## Features I love:
+    - Auto-save functionality
+    - Multiple tabs
+    - Export to PDF and Markdown
+    
+    Let me try a to-do list:
+    - [ ] Learn Markdown basics
+    - [ ] Create my first note
+    - [x] Install Fylepad
+    ```
+    
+    <Note>
+      **Auto-save in action**: Notice you don't need to manually save. Your changes are automatically preserved!
+    </Note>
+  </Step>
+  
+  <Step title="Format your text">
+    Fylepad supports rich Markdown formatting. Try these:
+    
+    <Tabs>
+      <Tab title="Basic formatting">
+        ```markdown
+        **Bold text**
+        *Italic text*
+        ~~Strikethrough~~
+        `inline code`
+        ```
+      </Tab>
+      
+      <Tab title="Lists">
+        ```markdown
+        - Unordered list item
+        - Another item
+          - Nested item
+        
+        1. Ordered list
+        2. Second item
+        3. Third item
+        ```
+      </Tab>
+      
+      <Tab title="Code blocks">
+        ````markdown
+        ```javascript
+        function greet(name) {
+          console.log(`Hello, ${name}!`);
+        }
+        ```
+        ````
+      </Tab>
+      
+      <Tab title="Task lists">
+        ```markdown
+        - [x] Completed task
+        - [ ] Pending task
+        - [ ] Another pending task
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  
+  <Step title="Open multiple tabs">
+    Need to work on multiple notes? Click the **+** button in the tab bar to create a new tab.
+    
+    You can:
+    - Switch between tabs by clicking on them
+    - Close tabs with the × button
+    - Drag tabs to reorder them
+  </Step>
+  
+  <Step title="Customize your experience">
+    Make Fylepad your own:
+    
+    - **Toggle theme**: Switch between light and dark mode
+    - **Change fonts**: Customize the editor font to your preference
+    - **Adjust colors**: Modify the color scheme
+    
+    <Tip>
+      Your theme and customization preferences are automatically saved!
+    </Tip>
+  </Step>
+  
+  <Step title="Export your note">
+    Ready to share your note? Fylepad supports multiple export formats:
+    
+    1. Click the **More Options** menu
+    2. Select **Export**
+    3. Choose your format:
+       - **PDF**: For sharing and printing
+       - **Markdown**: For use in other applications
+    
+    You can also import existing `.md` files into Fylepad.
+  </Step>
+</Steps>
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
+## Try advanced features
 
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
+Now that you've created your first note, explore Fylepad's advanced capabilities:
 
-### Step 3: Go live
+<CardGroup cols={2}>
+  <Card title="Create diagrams" icon="diagram-project" href="/advanced/diagrams">
+    Learn how to create Mermaid diagrams and PlantUML charts
+  </Card>
+  
+  <Card title="Build tables" icon="table" href="/advanced/tables">
+    Format data with Markdown tables
+  </Card>
+  
+  <Card title="Add code blocks" icon="code" href="/advanced/code-blocks">
+    Include syntax-highlighted code in multiple languages
+  </Card>
+  
+  <Card title="Write math" icon="square-root-variable" href="/advanced/mathematics">
+    Add mathematical equations using KaTeX
+  </Card>
+</CardGroup>
 
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
+## Example: Create a meeting notes template
+
+Try creating a reusable meeting notes template:
+
+```markdown
+# Meeting Notes - [Date]
+
+## Attendees
+- [ ] Person 1
+- [ ] Person 2
+- [ ] Person 3
+
+## Agenda
+1. Topic 1
+2. Topic 2
+3. Topic 3
+
+## Discussion
+**Topic 1:**
+- Key point 1
+- Key point 2
+
+**Topic 2:**
+- Key point 1
+- Key point 2
+
+## Action Items
+- [ ] @Person1: Action item description
+- [ ] @Person2: Action item description
+
+## Next Steps
+- Next meeting: [Date]
+- Follow-up items:
+  - [ ] Item 1
+  - [ ] Item 2
+```
+
+<Tip>
+  Save this as a template and create a new tab whenever you need meeting notes!
+</Tip>
+
+## Understanding auto-save
+
+Fylepad automatically saves your work as you type:
+
+- Your notes persist even if you close the app
+- All tabs are restored when you reopen Fylepad
+- No manual save button needed
+- Your preferences and theme settings are also saved
+
+<Warning>
+  While Fylepad auto-saves locally, remember to export important notes as backups or use version control for critical documents.
+</Warning>
+
+## Keyboard shortcuts
+
+Boost your productivity with keyboard shortcuts:
+
+| Action | Windows/Linux | macOS |
+|--------|--------------|-------|
+| New tab | `Ctrl+T` | `Cmd+T` |
+| Close tab | `Ctrl+W` | `Cmd+W` |
+| Bold | `Ctrl+B` | `Cmd+B` |
+| Italic | `Ctrl+I` | `Cmd+I` |
+| Export | `Ctrl+E` | `Cmd+E` |
+
+<Note>
+  For a complete list of keyboard shortcuts, visit the [Keyboard Shortcuts](/guide/keyboard-shortcuts) guide.
+</Note>
 
 ## Next steps
 
-Now that you have your docs running, explore these key features:
+You're now ready to use Fylepad effectively! Here's what to explore next:
 
 <CardGroup cols={2}>
-
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
-
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
-
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
+  <Card title="Markdown support" icon="markdown" href="/features/markdown-support">
+    Master all Markdown features supported in Fylepad
+  </Card>
+  
+  <Card title="Customization" icon="palette" href="/guide/customization">
+    Personalize Fylepad's appearance and behavior
+  </Card>
+  
+  <Card title="Organizing notes" icon="folder-tree" href="/guide/organizing-notes">
+    Learn strategies for organizing your notes
+  </Card>
+  
+  <Card title="Desktop vs Web" icon="desktop" href="/platforms/desktop">
+    Understand the differences between platforms
+  </Card>
 </CardGroup>
 
-<Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
-</Note>
+## Getting help
+
+Need assistance or have questions?
+
+- **Bug reports**: Open an issue on [GitHub](https://github.com/imrofayel/fylepad/issues)
+- **Feature requests**: Share your ideas in the Issues section
+- **Contributing**: Fork the repo and submit a pull request
+
+Happy note-taking!

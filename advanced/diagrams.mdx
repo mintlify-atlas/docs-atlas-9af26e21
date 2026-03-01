@@ -1,0 +1,267 @@
+---
+title: Diagrams
+description: Create flowcharts, sequence diagrams, and UML diagrams using Mermaid and PlantUML
+---
+
+Fylepad supports two powerful diagram rendering engines that let you create visual diagrams directly in your notes using simple text syntax.
+
+## Mermaid diagrams
+
+Mermaid is a JavaScript-based diagramming tool that renders markdown-inspired text definitions to create diagrams dynamically.
+
+### Creating a Mermaid diagram
+
+You can insert a Mermaid diagram in two ways:
+
+1. Type `:::mermaid` and press Enter
+2. Use the slash command menu (`/`) and select "Mermaid"
+
+The diagram renders in real-time as you type.
+
+### Flowcharts
+
+Create flowcharts to visualize processes and workflows:
+
+```
+graph TD;
+  A-->B;
+  A-->C;
+  B-->D;
+  C-->D;
+```
+
+You can customize the direction:
+- `TD` - Top to bottom
+- `LR` - Left to right
+- `RL` - Right to left
+- `BT` - Bottom to top
+
+### Sequence diagrams
+
+Document interactions between different components:
+
+```
+sequenceDiagram
+  participant User
+  participant App
+  participant Database
+  
+  User->>App: Open document
+  App->>Database: Fetch content
+  Database-->>App: Return data
+  App-->>User: Display document
+```
+
+### State diagrams
+
+Visualize state transitions:
+
+```
+stateDiagram-v2
+  [*] --> Draft
+  Draft --> Review
+  Review --> Published
+  Review --> Draft
+  Published --> [*]
+```
+
+### Pie charts
+
+Display data distributions:
+
+```
+pie title Document Types
+  "Notes" : 45
+  "Tasks" : 30
+  "Diagrams" : 15
+  "Tables" : 10
+```
+
+### Class diagrams
+
+Model object-oriented structures:
+
+```
+classDiagram
+  class Document {
+    +String title
+    +String content
+    +Date created
+    +save()
+    +export()
+  }
+  class Note {
+    +Array tags
+  }
+  Document <|-- Note
+```
+
+<Note>
+  Mermaid diagrams render automatically after a brief delay. If you see an error, check your syntax against the [Mermaid documentation](https://mermaid.js.org/).
+</Note>
+
+## PlantUML diagrams
+
+PlantUML is a versatile tool for creating UML diagrams from plain text descriptions.
+
+### Creating a PlantUML diagram
+
+You can insert a PlantUML diagram in two ways:
+
+1. Type `:::plantuml` and press Enter
+2. Use the slash command menu (`/`) and select "Plant UML"
+
+### Sequence diagrams
+
+Every PlantUML diagram starts with `@startuml` and ends with `@enduml`:
+
+```
+@startuml
+Bob -> Alice : hello
+Alice -> Bob : hi there
+@enduml
+```
+
+### Use case diagrams
+
+Model system functionality:
+
+```
+@startuml
+left to right direction
+actor User
+actor Admin
+
+rectangle Fylepad {
+  User --> (Create Note)
+  User --> (Edit Note)
+  User --> (Export Note)
+  Admin --> (Manage Settings)
+  (Manage Settings) ..> (Edit Note) : extends
+}
+@enduml
+```
+
+### Class diagrams
+
+Document software architecture:
+
+```
+@startuml
+class Document {
+  -String title
+  -String content
+  -Date timestamp
+  +save()
+  +load()
+  +export(format)
+}
+
+class Editor {
+  -Document document
+  +setText(text)
+  +getText()
+  +applyFormatting()
+}
+
+Editor "1" -- "1" Document
+@enduml
+```
+
+### Activity diagrams
+
+Illustrate workflows:
+
+```
+@startuml
+start
+:Open Fylepad;
+:Create new note;
+if (Has template?) then (yes)
+  :Apply template;
+else (no)
+  :Start blank;
+endif
+:Write content;
+:Save note;
+stop
+@enduml
+```
+
+### Component diagrams
+
+Show system components:
+
+```
+@startuml
+package "Fylepad" {
+  [Editor Component]
+  [Storage Component]
+  [Export Component]
+}
+
+cloud "External Services" {
+  [PlantUML Server]
+  [Mermaid Renderer]
+}
+
+[Editor Component] --> [Storage Component]
+[Editor Component] --> [Export Component]
+[Editor Component] ..> [PlantUML Server] : uses
+[Editor Component] ..> [Mermaid Renderer] : uses
+@enduml
+```
+
+<Warning>
+  PlantUML diagrams are rendered using an external service (plantuml.com). An internet connection is required for diagrams to display.
+</Warning>
+
+## Tips for creating diagrams
+
+<Accordion title="Keep it simple">
+  Start with basic diagrams and add complexity gradually. Complex diagrams can be harder to maintain and understand.
+</Accordion>
+
+<Accordion title="Use consistent naming">
+  Maintain consistent naming conventions for nodes, actors, and components across your diagrams.
+</Accordion>
+
+<Accordion title="Add comments">
+  Both Mermaid and PlantUML support comments. Use them to document your diagram logic:
+  - Mermaid: `%% This is a comment`
+  - PlantUML: `' This is a comment`
+</Accordion>
+
+<Accordion title="Test incrementally">
+  Build your diagrams step by step. If a diagram fails to render, you'll know exactly which line caused the issue.
+</Accordion>
+
+## Choosing between Mermaid and PlantUML
+
+<Tabs>
+  <Tab title="Mermaid">
+    **Best for:**
+    - Flowcharts and process diagrams
+    - Gantt charts
+    - Git graphs
+    - Quick visualizations
+    - Offline work (renders locally)
+    
+    **Syntax:** More markdown-like and intuitive
+  </Tab>
+  <Tab title="PlantUML">
+    **Best for:**
+    - UML diagrams (class, component, deployment)
+    - Complex sequence diagrams
+    - Use case diagrams
+    - Detailed software architecture
+    
+    **Syntax:** More structured and UML-focused
+  </Tab>
+</Tabs>
+
+## Exporting diagrams
+
+When you export your note as Markdown, diagram code is preserved in the export. The receiving application needs to support Mermaid/PlantUML rendering to display the diagrams.
+
+Alternatively, use the print function to save your note with rendered diagrams as a PDF.

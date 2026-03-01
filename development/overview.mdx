@@ -1,0 +1,88 @@
+---
+title: Development overview
+description: Learn about Fylepad's technology stack and architecture for building a cross-platform notepad application
+---
+
+Fylepad is a cross-platform notepad application built with modern web technologies and packaged as both a desktop application and a web app. This page provides an overview of the core technologies powering Fylepad.
+
+## Tech stack
+
+Fylepad combines several powerful technologies to deliver a fast, lightweight, and feature-rich note-taking experience:
+
+### Nuxt.js
+
+Fylepad uses [Nuxt.js](https://nuxt.com) v3.13+ as its frontend framework. Nuxt provides:
+
+- Static site generation (SSG) for the web version
+- Vue 3 composition API and reactive components
+- File-based routing with the `pages/` directory
+- Auto-imported components and composables
+- Built-in TypeScript support
+
+The application is configured with SSR disabled (`ssr: false` in `nuxt.config.ts`) to support both static web deployment and desktop integration.
+
+### Tauri
+
+[Tauri](https://tauri.app) v2.0 powers the desktop application, providing:
+
+- Lightweight native desktop wrapper (< 10MB total size)
+- Rust-based backend for performance and security
+- Native file system access via `@tauri-apps/plugin-fs`
+- Cross-platform builds for Windows, macOS, and Linux
+- No Chromium dependency—uses the system's native webview
+
+The Tauri configuration is located in `src-tauri/tauri.conf.json` and the Rust backend in `src-tauri/src/`.
+
+### TipTap
+
+[TipTap](https://tiptap.dev) v2.7+ provides the rich text editing capabilities. Fylepad leverages:
+
+- Extensive TipTap extensions for formatting, tables, code blocks, and more
+- Custom extensions in `extensions/` for specialized functionality
+- Markdown serialization via `tiptap-markdown`
+- Bubble and floating menus for inline editing
+- Support for mathematical expressions (KaTeX), Mermaid diagrams, and PlantUML charts
+
+The main editor component is located at `components/editor.vue`.
+
+### Tailwind CSS
+
+Styling is handled by [Tailwind CSS](https://tailwindcss.com) v3.4+ with:
+
+- `@tailwindcss/typography` for rich text styling
+- `tailwindcss-animate` for smooth transitions
+- Custom configuration in `tailwind.config.js`
+- Color mode support via `@nuxtjs/color-mode` (light/dark themes)
+- Component-based design system in `components/ui/`
+
+## Additional technologies
+
+Fylepad also integrates:
+
+- **Pinia** - State management for tabs, settings, and editor state
+- **VueUse** - Composition utilities for reactive features
+- **lowlight** - Syntax highlighting for code blocks
+- **KaTeX** - Math expression rendering
+- **Mermaid** - Diagram generation
+- **Reka UI** - Headless UI components for menus and dialogs
+
+## Development approach
+
+Fylepad is designed to work in multiple environments:
+
+- **Desktop app** - Full-featured with native file system access
+- **Web app** - Static site deployment with browser-based storage
+- **PWA** - Progressive Web App support via `@vite-pwa/nuxt`
+
+The codebase shares components and logic across all platforms, with platform-specific features detected at runtime.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Setup" icon="wrench" href="/development/setup">
+    Set up your development environment
+  </Card>
+  <Card title="Architecture" icon="sitemap" href="/development/architecture">
+    Explore the project structure
+  </Card>
+</CardGroup>

@@ -1,0 +1,229 @@
+---
+title: Auto-save
+description: Never lose your work with Fylepad's automatic state persistence
+---
+
+Fylepad automatically saves your work as you type, ensuring you never lose progress even if the app closes unexpectedly.
+
+## How auto-save works
+
+Fylepad uses a **real-time persistence system** that saves your state continuously:
+
+<Steps>
+  <Step title="You type">
+    As you edit your note, changes are tracked in the editor state
+  </Step>
+  <Step title="Automatic save">
+    Fylepad saves changes to local storage automatically
+  </Step>
+  <Step title="State persistence">
+    Your entire workspace (all tabs, content, and settings) is preserved
+  </Step>
+  <Step title="Instant restore">
+    When you reopen Fylepad, everything restores exactly as you left it
+  </Step>
+</Steps>
+
+No manual saving required — just close the app anytime and pick up where you left off.
+
+## What gets saved
+
+Fylepad preserves your complete workspace:
+
+### Content
+- **Editor content** — All text and formatting in every tab
+- **Tab titles** — Custom names you've assigned
+- **Tab order** — Your custom arrangement
+- **Active tab** — Which tab was open when you closed
+
+### Formatting
+- **Text styling** — Bold, italic, underline, colors, fonts
+- **Document structure** — Headings, lists, tables
+- **Code blocks** — Syntax highlighting settings
+- **Diagrams** — Mermaid and PlantUML code
+- **Math equations** — KaTeX formulas
+
+### Settings
+- **Theme** — Light or dark mode preference
+- **Font selection** — Your chosen font family
+- **Text color** — Custom color selections
+- **Tab colors** — Color coding for tabs
+- **Tab locks** — Locked/unlocked state
+- **Layout** — Horizontal or vertical tab layout
+
+### UI state
+- **Cursor position** — Where you were editing
+- **Scroll position** — Your place in the document
+- **Focus mode** — Whether focus mode was enabled
+
+<Info>
+Everything is saved locally on your device. Desktop app uses the file system, web version uses browser localStorage.
+</Info>
+
+## Storage location
+
+Auto-save data is stored in different locations depending on your platform:
+
+<Tabs>
+  <Tab title="Desktop (Windows)">
+    ```
+    %APPDATA%\com.fylepad.dev\localStorage
+    ```
+    
+    Or check the Tauri app data directory for your user account.
+  </Tab>
+  <Tab title="Desktop (macOS)">
+    ```
+    ~/Library/Application Support/com.fylepad.dev/
+    ```
+    
+    The app data is stored in your user's Application Support folder.
+  </Tab>
+  <Tab title="Desktop (Linux)">
+    ```
+    ~/.local/share/com.fylepad.dev/
+    ```
+    
+    Or check `$XDG_DATA_HOME/com.fylepad.dev/` if you've set XDG_DATA_HOME.
+  </Tab>
+  <Tab title="Web">
+    Auto-save uses browser `localStorage` API. Data is stored by your browser in its local storage database.
+    
+    You can view it in browser DevTools:
+    - Chrome/Edge: F12 → Application → Local Storage
+    - Firefox: F12 → Storage → Local Storage
+  </Tab>
+</Tabs>
+
+## Save triggers
+
+Fylepad saves your state in real-time when:
+
+- **You type** — Content changes trigger automatic saves
+- **You change tabs** — Switching tabs saves the current state
+- **You change settings** — Theme, font, or color changes are saved immediately
+- **You close a tab** — Tab state is persisted before removal
+- **You exit the app** — Final state save on app close
+
+<Note>
+There's no save delay or interval. Changes are persisted immediately as part of the editor state management.
+</Note>
+
+## Data format
+
+Fylepad stores data in JSON format:
+
+```json
+{
+  "tabs": [
+    {
+      "id": "unique-id",
+      "title": "My Note",
+      "content": "HTML or JSON representation of editor content",
+      "color": "Blue",
+      "lock": false
+    }
+  ],
+  "activeTab": 0,
+  "theme": "dark",
+  "layout": "horizontal"
+}
+```
+
+This ensures compatibility and makes it possible to export/backup your data.
+
+## Reliability
+
+Fylepad's auto-save is designed to be bulletproof:
+
+✅ **No data loss on crash** — State is saved continuously, not on app exit  
+✅ **Battery failure protection** — Desktop app persists to disk immediately  
+✅ **Browser crash recovery** — Web version uses localStorage which survives crashes  
+✅ **Power outage safety** — Most recent saved state is always recoverable
+
+<Warning>
+In the web version, clearing browser data will delete your saved notes. Use the export feature to create backups.
+</Warning>
+
+## Manual export for backups
+
+While auto-save protects against crashes, you may want additional backups:
+
+<Steps>
+  <Step title="Export individual notes">
+    Use **Export as Markdown** or **Export as PDF** for specific notes
+  </Step>
+  <Step title="Save files locally">
+    Desktop app allows saving notes as `.md` files anywhere on your system
+  </Step>
+  <Step title="Cloud backup">
+    Copy exported files to cloud storage (Dropbox, Google Drive, etc.) for off-device backups
+  </Step>
+</Steps>
+
+## Privacy and security
+
+Your auto-save data is completely private:
+
+- **Local only** — All data stays on your device
+- **No cloud sync** — Nothing is sent to external servers
+- **No telemetry** — Auto-save doesn't track or report usage
+- **Full control** — You can delete saved data anytime by clearing app storage
+
+<Info>
+Fylepad includes privacy-focused analytics (Umami) but this only tracks page views, not your note content or auto-save data.
+</Info>
+
+## Clearing saved data
+
+If you need to reset Fylepad:
+
+<Tabs>
+  <Tab title="Desktop">
+    <Steps>
+      <Step title="Close Fylepad">
+        Quit the application completely
+      </Step>
+      <Step title="Navigate to data folder">
+        Go to the platform-specific storage location (see above)
+      </Step>
+      <Step title="Delete files">
+        Remove the localStorage or data files
+      </Step>
+      <Step title="Restart app">
+        Reopen Fylepad with a clean state
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="Web">
+    <Steps>
+      <Step title="Open DevTools">
+        Press F12 to open browser developer tools
+      </Step>
+      <Step title="Find localStorage">
+        Navigate to Application → Local Storage (Chrome) or Storage → Local Storage (Firefox)
+      </Step>
+      <Step title="Clear data">
+        Delete Fylepad's localStorage entries
+      </Step>
+      <Step title="Refresh page">
+        Reload the page to start fresh
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
+
+<Warning>
+Clearing saved data is permanent and cannot be undone. Export important notes before clearing.
+</Warning>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Export and import" icon="file-export" href="/features/export-import">
+    Learn how to export notes as PDF or Markdown
+  </Card>
+  <Card title="Cross-platform sync" icon="arrows-rotate" href="/platforms/cross-platform-sync">
+    Understand how state persistence works across platforms
+  </Card>
+</CardGroup>

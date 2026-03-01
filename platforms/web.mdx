@@ -1,0 +1,113 @@
+---
+title: 'Web application'
+description: 'Use Fylepad in your browser with PWA support for a native-like experience'
+---
+
+Fylepad is available as a Progressive Web App (PWA), allowing you to use it directly in your browser with optional installation for a native-like experience.
+
+## Getting started
+
+Access Fylepad instantly at [fylepadapp.vercel.app](https://fylepadapp.vercel.app). No download or installation required—just open the URL and start taking notes.
+
+## Browser compatibility
+
+Fylepad works best in modern browsers with full support for PWA features:
+
+<Columns cols={2}>
+  <Card title="Recommended" icon="check">
+    - Google Chrome (latest)
+    - Microsoft Edge (latest)
+    - Safari 15.4+
+    - Firefox (latest)
+  </Card>
+  <Card title="Mobile browsers" icon="mobile">
+    - Chrome for Android
+    - Safari for iOS 15.4+
+    - Samsung Internet
+  </Card>
+</Columns>
+
+## Progressive Web App features
+
+Fylepad's web version is built as a PWA, providing enhanced capabilities beyond a traditional web application.
+
+### Install as an app
+
+You can install Fylepad to your device for quick access:
+
+<Tabs>
+  <Tab title="Desktop">
+    1. Open [fylepadapp.vercel.app](https://fylepadapp.vercel.app) in your browser
+    2. Look for the install icon in your browser's address bar
+    3. Click "Install" or "Add to Home Screen"
+    4. The app will open in its own window without browser UI
+  </Tab>
+  <Tab title="Mobile">
+    1. Open the site in Safari (iOS) or Chrome (Android)
+    2. Tap the Share button (iOS) or menu (Android)
+    3. Select "Add to Home Screen"
+    4. Tap "Add" to confirm
+  </Tab>
+</Tabs>
+
+<Info>
+  Once installed, Fylepad appears as a standalone app with its own icon, just like native applications.
+</Info>
+
+### Offline capabilities
+
+The PWA uses service workers to cache essential resources, allowing you to:
+
+- Access the application interface offline
+- Continue working on your notes without connectivity
+- Automatically sync changes when you're back online
+
+<Note>
+  While the interface works offline, some features like AI editing require an internet connection.
+</Note>
+
+### App manifest
+
+Fylepad's PWA manifest defines its appearance and behavior:
+
+```json
+{
+  "name": "fylepad - a notepad of your dreams!",
+  "short_name": "fylepad",
+  "description": "a minimal notepad with everything you'd need",
+  "display": "standalone",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff"
+}
+```
+
+The `standalone` display mode removes browser UI elements, creating an immersive app-like experience.
+
+## Storage
+
+The web version uses browser localStorage to persist your notes and preferences. Your data remains private and stored only on your device.
+
+<Warning>
+  Browser data can be cleared by system cleanup tools or privacy settings. For daily offline use, consider the [desktop application](/platforms/desktop).
+</Warning>
+
+## Performance
+
+Fylepad's web application is optimized for performance:
+
+- Static site generation with Nuxt.js for fast initial loads
+- Efficient bundle splitting
+- Lazy loading of heavy components (diagrams, charts)
+- Minimal JavaScript payload
+
+## Responsive design
+
+The web interface adapts seamlessly to different screen sizes:
+
+- Desktop: Full multi-tab interface with side panels
+- Tablet: Optimized layout with collapsible sidebars
+- Mobile: Touch-friendly controls and simplified navigation
+
+## Analytics
+
+Fylepad uses privacy-focused Umami analytics to understand usage patterns without tracking personal information or compromising your privacy.
