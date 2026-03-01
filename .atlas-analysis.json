@@ -1,7 +1,7 @@
 {
   "projectType": "saas",
   "projectName": "Fylepad",
-  "projectDescription": "A cross-platform notepad for effortless note-taking with rich text editing, multiple tabs, cloud sync, and support for Mermaid/PlantUML diagrams.",
+  "projectDescription": "A cross-platform notepad for effortless note-taking with rich text editing, multiple tabs, auto-save, and support for Mermaid/PlantUML diagrams.",
   "theme": "almond",
   "primaryColor": "#F97316",
   "lightColor": "#FED7AA",
